@@ -1,0 +1,1098 @@
+./sigalrm.c:66:	struct wps_data *wps = get_wps();
+./sigalrm.c:78:	  (wps->state == RECV_M5 || wps->state == RECV_M7))
+./wps/wps_registrar.c:95:	struct wps_context *wps;
+./wps/wps_registrar.c:303:static int wps_build_wps_state(struct wps_context *wps, struct wpabuf *msg)
+./wps/wps_registrar.c:306:		   wps->wps_state);
+./wps/wps_registrar.c:309:	wpabuf_put_u8(msg, wps->wps_state);
+./wps/wps_registrar.c:315:static void wps_registrar_free_pending_m2(struct wps_context *wps)
+./wps/wps_registrar.c:318:	p = wps->upnp_msgs;
+./wps/wps_registrar.c:322:				wps->upnp_msgs = p->next;
+./wps/wps_registrar.c:339:static int wps_build_ap_setup_locked(struct wps_context *wps,
+./wps/wps_registrar.c:342:	if (wps->ap_setup_locked) {
+./wps/wps_registrar.c:387:	methods = reg->wps->config_methods & ~WPS_CONFIG_PUSHBUTTON;
+./wps/wps_registrar.c:409:	methods = reg->wps->config_methods & ~WPS_CONFIG_PUSHBUTTON;
+./wps/wps_registrar.c:429:	methods = reg->wps->config_methods & ~WPS_CONFIG_PUSHBUTTON;
+./wps/wps_registrar.c:439: * @wps: Pointer to longterm WPS context
+./wps/wps_registrar.c:450:wps_registrar_init(struct wps_context *wps,
+./wps/wps_registrar.c:458:	reg->wps = wps;
+./wps/wps_registrar.c:719:		wps_pbc_timeout_event(reg->wps);
+./wps/wps_registrar.c:742:		wps_pbc_overlap_event(reg->wps);
+./wps/wps_registrar.c:856:		wps_pbc_overlap_event(reg->wps);
+./wps/wps_registrar.c:925:		methods = reg->wps->config_methods & ~WPS_CONFIG_PUSHBUTTON;
+./wps/wps_registrar.c:991:	    wps_build_wps_state(reg->wps, beacon) ||
+./wps/wps_registrar.c:992:	    wps_build_ap_setup_locked(reg->wps, beacon) ||
+./wps/wps_registrar.c:997:	    wps_build_wps_state(reg->wps, probe) ||
+./wps/wps_registrar.c:998:	    wps_build_ap_setup_locked(reg->wps, probe) ||
+./wps/wps_registrar.c:1002:	    wps_build_resp_type(probe, reg->wps->ap ? WPS_RESP_AP :
+./wps/wps_registrar.c:1004:	    wps_build_uuid_e(probe, reg->wps->uuid) ||
+./wps/wps_registrar.c:1005:	    wps_build_device_attrs(&reg->wps->dev, probe) ||
+./wps/wps_registrar.c:1007:	    wps_build_rf_bands(&reg->wps->dev, probe)) {
+./wps/wps_registrar.c:1048:static int wps_get_dev_password(struct wps_data *wps)
+./wps/wps_registrar.c:1053:	os_free(wps->dev_password);
+./wps/wps_registrar.c:1054:	wps->dev_password = NULL;
+./wps/wps_registrar.c:1056:	pin = wps_registrar_get_pin(wps->wps->registrar, wps->uuid_e, &pin_len);
+./wps/wps_registrar.c:1060:		if(wps->wps->registrar != NULL)
+./wps/wps_registrar.c:1062:			wps_cb_pin_needed(wps->wps->registrar, wps->uuid_e,
+./wps/wps_registrar.c:1063:					  &wps->peer_dev);
+./wps/wps_registrar.c:1068:	wps->dev_password = os_malloc(pin_len);
+./wps/wps_registrar.c:1069:	if (wps->dev_password == NULL)
+./wps/wps_registrar.c:1071:	os_memcpy(wps->dev_password, pin, pin_len);
+./wps/wps_registrar.c:1072:	wps->dev_password_len = pin_len;
+./wps/wps_registrar.c:1078:static int wps_build_uuid_r(struct wps_data *wps, struct wpabuf *msg)
+./wps/wps_registrar.c:1083:	wpabuf_put_data(msg, wps->uuid_r, WPS_UUID_LEN);
+./wps/wps_registrar.c:1088:static int wps_build_r_hash(struct wps_data *wps, struct wpabuf *msg)
+./wps/wps_registrar.c:1094:	if (os_get_random(wps->snonce, 2 * WPS_SECRET_NONCE_LEN) < 0)
+./wps/wps_registrar.c:1096:	wpa_hexdump(MSG_DEBUG, "WPS: R-S1", wps->snonce, WPS_SECRET_NONCE_LEN);
+./wps/wps_registrar.c:1098:		    wps->snonce + WPS_SECRET_NONCE_LEN, WPS_SECRET_NONCE_LEN);
+./wps/wps_registrar.c:1100:	if (wps->dh_pubkey_e == NULL || wps->dh_pubkey_r == NULL) {
+./wps/wps_registrar.c:1111:	addr[0] = wps->snonce;
+./wps/wps_registrar.c:1113:	addr[1] = wps->psk1;
+./wps/wps_registrar.c:1115:	addr[2] = wpabuf_head(wps->dh_pubkey_e);
+./wps/wps_registrar.c:1116:	len[2] = wpabuf_len(wps->dh_pubkey_e);
+./wps/wps_registrar.c:1117:	addr[3] = wpabuf_head(wps->dh_pubkey_r);
+./wps/wps_registrar.c:1118:	len[3] = wpabuf_len(wps->dh_pubkey_r);
+./wps/wps_registrar.c:1119:	hmac_sha256_vector(wps->authkey, WPS_AUTHKEY_LEN, 4, addr, len, hash);
+./wps/wps_registrar.c:1127:	addr[0] = wps->snonce + WPS_SECRET_NONCE_LEN;
+./wps/wps_registrar.c:1128:	addr[1] = wps->psk2;
+./wps/wps_registrar.c:1129:	hmac_sha256_vector(wps->authkey, WPS_AUTHKEY_LEN, 4, addr, len, hash);
+./wps/wps_registrar.c:1136:static int wps_build_r_snonce1(struct wps_data *wps, struct wpabuf *msg)
+./wps/wps_registrar.c:1141:	wpabuf_put_data(msg, wps->snonce, WPS_SECRET_NONCE_LEN);
+./wps/wps_registrar.c:1146:static int wps_build_r_snonce2(struct wps_data *wps, struct wpabuf *msg)
+./wps/wps_registrar.c:1151:	wpabuf_put_data(msg, wps->snonce + WPS_SECRET_NONCE_LEN,
+./wps/wps_registrar.c:1241:int wps_build_cred(struct wps_data *wps, struct wpabuf *msg)
+./wps/wps_registrar.c:1245:	if (wps->wps->registrar->skip_cred_build)
+./wps/wps_registrar.c:1249:	if (wps->use_cred) {
+./wps/wps_registrar.c:1250:		os_memcpy(&wps->cred, wps->use_cred, sizeof(wps->cred));
+./wps/wps_registrar.c:1253:	os_memset(&wps->cred, 0, sizeof(wps->cred));
+./wps/wps_registrar.c:1255:	os_memcpy(wps->cred.ssid, wps->wps->ssid, wps->wps->ssid_len);
+./wps/wps_registrar.c:1256:	wps->cred.ssid_len = wps->wps->ssid_len;
+./wps/wps_registrar.c:1259:	if (wps->auth_type & WPS_AUTH_WPA2PSK)
+./wps/wps_registrar.c:1260:		wps->auth_type = WPS_AUTH_WPA2PSK;
+./wps/wps_registrar.c:1261:	else if (wps->auth_type & WPS_AUTH_WPAPSK)
+./wps/wps_registrar.c:1262:		wps->auth_type = WPS_AUTH_WPAPSK;
+./wps/wps_registrar.c:1263:	else if (wps->auth_type & WPS_AUTH_OPEN)
+./wps/wps_registrar.c:1264:		wps->auth_type = WPS_AUTH_OPEN;
+./wps/wps_registrar.c:1265:	else if (wps->auth_type & WPS_AUTH_SHARED)
+./wps/wps_registrar.c:1266:		wps->auth_type = WPS_AUTH_SHARED;
+./wps/wps_registrar.c:1269:			   wps->auth_type);
+./wps/wps_registrar.c:1272:	wps->cred.auth_type = wps->auth_type;
+./wps/wps_registrar.c:1274:	if (wps->auth_type == WPS_AUTH_WPA2PSK ||
+./wps/wps_registrar.c:1275:	    wps->auth_type == WPS_AUTH_WPAPSK) {
+./wps/wps_registrar.c:1276:		if (wps->encr_type & WPS_ENCR_AES)
+./wps/wps_registrar.c:1277:			wps->encr_type = WPS_ENCR_AES;
+./wps/wps_registrar.c:1278:		else if (wps->encr_type & WPS_ENCR_TKIP)
+./wps/wps_registrar.c:1279:			wps->encr_type = WPS_ENCR_TKIP;
+./wps/wps_registrar.c:1286:		if (wps->encr_type & WPS_ENCR_WEP)
+./wps/wps_registrar.c:1287:			wps->encr_type = WPS_ENCR_WEP;
+./wps/wps_registrar.c:1288:		else if (wps->encr_type & WPS_ENCR_NONE)
+./wps/wps_registrar.c:1289:			wps->encr_type = WPS_ENCR_NONE;
+./wps/wps_registrar.c:1296:	wps->cred.encr_type = wps->encr_type;
+./wps/wps_registrar.c:1300:	os_memcpy(wps->cred.mac_addr, wps->mac_addr_e, ETH_ALEN);
+./wps/wps_registrar.c:1302:	if (wps->wps->wps_state == WPS_STATE_NOT_CONFIGURED && wps->wps->ap &&
+./wps/wps_registrar.c:1303:	    !wps->wps->registrar->disable_auto_conf) {
+./wps/wps_registrar.c:1308:		os_free(wps->new_psk);
+./wps/wps_registrar.c:1309:		wps->new_psk = base64_encode(r, sizeof(r), &wps->new_psk_len);
+./wps/wps_registrar.c:1310:		if (wps->new_psk == NULL)
+./wps/wps_registrar.c:1312:		wps->new_psk_len--; /* remove newline */
+./wps/wps_registrar.c:1313:		while (wps->new_psk_len &&
+./wps/wps_registrar.c:1314:		       wps->new_psk[wps->new_psk_len - 1] == '=')
+./wps/wps_registrar.c:1315:			wps->new_psk_len--;
+./wps/wps_registrar.c:1317:				      wps->new_psk, wps->new_psk_len);
+./wps/wps_registrar.c:1318:		os_memcpy(wps->cred.key, wps->new_psk, wps->new_psk_len);
+./wps/wps_registrar.c:1319:		wps->cred.key_len = wps->new_psk_len;
+./wps/wps_registrar.c:1320:	} else if (wps->use_psk_key && wps->wps->psk_set) {
+./wps/wps_registrar.c:1323:		wpa_snprintf_hex(hex, sizeof(hex), wps->wps->psk, 32);
+./wps/wps_registrar.c:1324:		os_memcpy(wps->cred.key, hex, 32 * 2);
+./wps/wps_registrar.c:1325:		wps->cred.key_len = 32 * 2;
+./wps/wps_registrar.c:1326:	} else if (wps->wps->network_key) {
+./wps/wps_registrar.c:1327:		os_memcpy(wps->cred.key, wps->wps->network_key,
+./wps/wps_registrar.c:1328:			  wps->wps->network_key_len);
+./wps/wps_registrar.c:1329:		wps->cred.key_len = wps->wps->network_key_len;
+./wps/wps_registrar.c:1330:	} else if (wps->auth_type & (WPS_AUTH_WPAPSK | WPS_AUTH_WPA2PSK)) {
+./wps/wps_registrar.c:1333:		os_free(wps->new_psk);
+./wps/wps_registrar.c:1334:		wps->new_psk_len = 32;
+./wps/wps_registrar.c:1335:		wps->new_psk = os_malloc(wps->new_psk_len);
+./wps/wps_registrar.c:1336:		if (wps->new_psk == NULL)
+./wps/wps_registrar.c:1338:		if (os_get_random(wps->new_psk, wps->new_psk_len) < 0) {
+./wps/wps_registrar.c:1339:			os_free(wps->new_psk);
+./wps/wps_registrar.c:1340:			wps->new_psk = NULL;
+./wps/wps_registrar.c:1344:				wps->new_psk, wps->new_psk_len);
+./wps/wps_registrar.c:1345:		wpa_snprintf_hex(hex, sizeof(hex), wps->new_psk,
+./wps/wps_registrar.c:1346:				 wps->new_psk_len);
+./wps/wps_registrar.c:1347:		os_memcpy(wps->cred.key, hex, wps->new_psk_len * 2);
+./wps/wps_registrar.c:1348:		wps->cred.key_len = wps->new_psk_len * 2;
+./wps/wps_registrar.c:1356:	if (wps_build_credential(cred, &wps->cred)) {
+./wps/wps_registrar.c:1367:	if (wps->wps->registrar->extra_cred) {
+./wps/wps_registrar.c:1369:		wpabuf_put_buf(msg, wps->wps->registrar->extra_cred);
+./wps/wps_registrar.c:1376:static int wps_build_ap_settings(struct wps_data *wps, struct wpabuf *msg)
+./wps/wps_registrar.c:1380:	if (wps_build_credential(msg, &wps->cred))
+./wps/wps_registrar.c:1387:static struct wpabuf * wps_build_m2(struct wps_data *wps)
+./wps/wps_registrar.c:1391:	if (os_get_random(wps->nonce_r, WPS_NONCE_LEN) < 0)
+./wps/wps_registrar.c:1394:		    wps->nonce_r, WPS_NONCE_LEN);
+./wps/wps_registrar.c:1395:	wpa_hexdump(MSG_DEBUG, "WPS: UUID-R", wps->uuid_r, WPS_UUID_LEN);
+./wps/wps_registrar.c:1404:	    wps_build_enrollee_nonce(wps, msg) ||
+./wps/wps_registrar.c:1405:	    wps_build_registrar_nonce(wps, msg) ||
+./wps/wps_registrar.c:1406:	    wps_build_uuid_r(wps, msg) ||
+./wps/wps_registrar.c:1407:	    wps_build_public_key(wps, msg) ||
+./wps/wps_registrar.c:1408:	    wps_derive_keys(wps) ||
+./wps/wps_registrar.c:1409:	    wps_build_auth_type_flags(wps, msg) ||
+./wps/wps_registrar.c:1410:	    wps_build_encr_type_flags(wps, msg) ||
+./wps/wps_registrar.c:1411:	    wps_build_conn_type_flags(wps, msg) ||
+./wps/wps_registrar.c:1412:	    wps_build_config_methods_r(wps->wps->registrar, msg) ||
+./wps/wps_registrar.c:1413:	    wps_build_device_attrs(&wps->wps->dev, msg) ||
+./wps/wps_registrar.c:1414:	    wps_build_rf_bands(&wps->wps->dev, msg) ||
+./wps/wps_registrar.c:1415:	    wps_build_assoc_state(wps, msg) ||
+./wps/wps_registrar.c:1417:	    wps_build_dev_password_id(msg, wps->dev_pw_id) ||
+./wps/wps_registrar.c:1418:	    wps_build_os_version(&wps->wps->dev, msg) ||
+./wps/wps_registrar.c:1419:	    wps_build_authenticator(wps, msg)) {
+./wps/wps_registrar.c:1424:	wps->int_reg = 1;
+./wps/wps_registrar.c:1425:	wps->state = RECV_M3;
+./wps/wps_registrar.c:1430:static struct wpabuf * wps_build_m2d(struct wps_data *wps)
+./wps/wps_registrar.c:1433:	u16 err = wps->config_error;
+./wps/wps_registrar.c:1440:	if (wps->wps->ap && wps->wps->ap_setup_locked &&
+./wps/wps_registrar.c:1446:	    wps_build_enrollee_nonce(wps, msg) ||
+./wps/wps_registrar.c:1447:	    wps_build_registrar_nonce(wps, msg) ||
+./wps/wps_registrar.c:1448:	    wps_build_uuid_r(wps, msg) ||
+./wps/wps_registrar.c:1449:	    wps_build_auth_type_flags(wps, msg) ||
+./wps/wps_registrar.c:1450:	    wps_build_encr_type_flags(wps, msg) ||
+./wps/wps_registrar.c:1451:	    wps_build_conn_type_flags(wps, msg) ||
+./wps/wps_registrar.c:1452:	    wps_build_config_methods_r(wps->wps->registrar, msg) ||
+./wps/wps_registrar.c:1453:	    wps_build_device_attrs(&wps->wps->dev, msg) ||
+./wps/wps_registrar.c:1454:	    wps_build_rf_bands(&wps->wps->dev, msg) ||
+./wps/wps_registrar.c:1455:	    wps_build_assoc_state(wps, msg) ||
+./wps/wps_registrar.c:1457:	    wps_build_os_version(&wps->wps->dev, msg)) {
+./wps/wps_registrar.c:1462:	wps->state = RECV_M2D_ACK;
+./wps/wps_registrar.c:1467:static struct wpabuf * wps_build_m4(struct wps_data *wps)
+./wps/wps_registrar.c:1473:	wpa_printf(MSG_DEBUG, "WPS: Dev Password Len: %zu", wps->dev_password_len);
+./wps/wps_registrar.c:1474:	wpa_printf(MSG_DEBUG, "WPS: Dev Password: %s", wps->dev_password);
+./wps/wps_registrar.c:1476:	wps_derive_psk(wps, wps->dev_password, wps->dev_password_len);
+./wps/wps_registrar.c:1492:	    wps_build_enrollee_nonce(wps, msg) ||
+./wps/wps_registrar.c:1493:	    wps_build_r_hash(wps, msg) ||
+./wps/wps_registrar.c:1494:	    wps_build_r_snonce1(wps, plain) ||
+./wps/wps_registrar.c:1495:	    wps_build_key_wrap_auth(wps, plain) ||
+./wps/wps_registrar.c:1496:	    wps_build_encr_settings(wps, msg, plain) ||
+./wps/wps_registrar.c:1497:	    wps_build_authenticator(wps, msg)) {
+./wps/wps_registrar.c:1504:	wps->state = RECV_M5;
+./wps/wps_registrar.c:1509:static struct wpabuf * wps_build_m6(struct wps_data *wps)
+./wps/wps_registrar.c:1527:	    wps_build_enrollee_nonce(wps, msg) ||
+./wps/wps_registrar.c:1528:	    wps_build_r_snonce2(wps, plain) ||
+./wps/wps_registrar.c:1529:	    wps_build_key_wrap_auth(wps, plain) ||
+./wps/wps_registrar.c:1530:	    wps_build_encr_settings(wps, msg, plain) ||
+./wps/wps_registrar.c:1531:	    wps_build_authenticator(wps, msg)) {
+./wps/wps_registrar.c:1538:	wps->wps_pin_revealed = 1;
+./wps/wps_registrar.c:1539:	wps->state = RECV_M7;
+./wps/wps_registrar.c:1544:static struct wpabuf * wps_build_m8(struct wps_data *wps)
+./wps/wps_registrar.c:1562:	    wps_build_enrollee_nonce(wps, msg) ||
+./wps/wps_registrar.c:1563:	    ((wps->wps->ap || wps->er) && wps_build_cred(wps, plain)) ||
+./wps/wps_registrar.c:1564:	    (!wps->wps->ap && !wps->er && wps_build_ap_settings(wps, plain)) ||
+./wps/wps_registrar.c:1565:	    wps_build_key_wrap_auth(wps, plain) ||
+./wps/wps_registrar.c:1566:	    wps_build_encr_settings(wps, msg, plain) ||
+./wps/wps_registrar.c:1567:	    wps_build_authenticator(wps, msg)) {
+./wps/wps_registrar.c:1574:	wps->state = RECV_DONE;
+./wps/wps_registrar.c:1579:static struct wpabuf * wps_build_wsc_ack(struct wps_data *wps)
+./wps/wps_registrar.c:1591:	    wps_build_enrollee_nonce(wps, msg) ||
+./wps/wps_registrar.c:1592:	    wps_build_registrar_nonce(wps, msg)) {
+./wps/wps_registrar.c:1601:static struct wpabuf * wps_build_wsc_nack(struct wps_data *wps)
+./wps/wps_registrar.c:1613:	    wps_build_enrollee_nonce(wps, msg) ||
+./wps/wps_registrar.c:1614:	    wps_build_registrar_nonce(wps, msg) ||
+./wps/wps_registrar.c:1615:	    wps_build_config_error(msg, wps->config_error)) {
+./wps/wps_registrar.c:1624:struct wpabuf * wps_registrar_get_msg(struct wps_data *wps,
+./wps/wps_registrar.c:1630:	if(wps->wps->registrar != NULL)
+./wps/wps_registrar.c:1635:				if(wps_get_dev_password(wps) >= 0)
+./wps/wps_registrar.c:1637:					msg = wps_build_m2(wps);
+./wps/wps_registrar.c:1644:				msg = wps_build_wsc_nack(wps);
+./wps/wps_registrar.c:1649:				msg = wps_build_m4(wps);
+./wps/wps_registrar.c:1654:				msg = wps_build_m6(wps);
+./wps/wps_registrar.c:1659:				msg = wps_build_m8(wps);
+./wps/wps_registrar.c:1664:				msg = wps_build_wsc_ack(wps);
+./wps/wps_registrar.c:1670:					   "a message", wps->state);
+./wps/wps_registrar.c:1680:		wpabuf_free(wps->last_msg);
+./wps/wps_registrar.c:1681:		wps->last_msg = wpabuf_dup(msg);
+./wps/wps_registrar.c:1688:static int wps_process_enrollee_nonce(struct wps_data *wps, const u8 *e_nonce)
+./wps/wps_registrar.c:1695:	os_memcpy(wps->nonce_e, e_nonce, WPS_NONCE_LEN);
+./wps/wps_registrar.c:1697:		    wps->nonce_e, WPS_NONCE_LEN);
+./wps/wps_registrar.c:1701:		pixie_format(wps->nonce_e, WPS_NONCE_LEN, buf);
+./wps/wps_registrar.c:1709:static int wps_process_registrar_nonce(struct wps_data *wps, const u8 *r_nonce)
+./wps/wps_registrar.c:1716:	if (os_memcmp(wps->nonce_r, r_nonce, WPS_NONCE_LEN) != 0) {
+./wps/wps_registrar.c:1725:static int wps_process_uuid_e(struct wps_data *wps, const u8 *uuid_e)
+./wps/wps_registrar.c:1732:	os_memcpy(wps->uuid_e, uuid_e, WPS_UUID_LEN);
+./wps/wps_registrar.c:1733:	wpa_hexdump(MSG_DEBUG, "WPS: UUID-E", wps->uuid_e, WPS_UUID_LEN);
+./wps/wps_registrar.c:1739:static int wps_process_dev_password_id(struct wps_data *wps, const u8 *pw_id)
+./wps/wps_registrar.c:1746:	wps->dev_pw_id = WPA_GET_BE16(pw_id);
+./wps/wps_registrar.c:1747:	wpa_printf(MSG_DEBUG, "WPS: Device Password ID %d", wps->dev_pw_id);
+./wps/wps_registrar.c:1753:static int wps_process_e_hash1(struct wps_data *wps, const u8 *e_hash1)
+./wps/wps_registrar.c:1760:	os_memcpy(wps->peer_hash1, e_hash1, WPS_HASH_LEN);
+./wps/wps_registrar.c:1761:	wpa_hexdump(MSG_DEBUG, "WPS: E-Hash1", wps->peer_hash1, WPS_HASH_LEN);
+./wps/wps_registrar.c:1765:		pixie_format(wps->peer_hash1, WPS_HASH_LEN, buf);
+./wps/wps_registrar.c:1773:static int wps_process_e_hash2(struct wps_data *wps, const u8 *e_hash2)
+./wps/wps_registrar.c:1780:	os_memcpy(wps->peer_hash2, e_hash2, WPS_HASH_LEN);
+./wps/wps_registrar.c:1781:	wpa_hexdump(MSG_DEBUG, "WPS: E-Hash2", wps->peer_hash2, WPS_HASH_LEN);
+./wps/wps_registrar.c:1785:		pixie_format(wps->peer_hash2, WPS_HASH_LEN, buf);
+./wps/wps_registrar.c:1795:static int wps_process_e_snonce1(struct wps_data *wps, const u8 *e_snonce1)
+./wps/wps_registrar.c:1812:	addr[1] = wps->psk1;
+./wps/wps_registrar.c:1814:	addr[2] = wpabuf_head(wps->dh_pubkey_e);
+./wps/wps_registrar.c:1815:	len[2] = wpabuf_len(wps->dh_pubkey_e);
+./wps/wps_registrar.c:1816:	addr[3] = wpabuf_head(wps->dh_pubkey_r);
+./wps/wps_registrar.c:1817:	len[3] = wpabuf_len(wps->dh_pubkey_r);
+./wps/wps_registrar.c:1818:	hmac_sha256_vector(wps->authkey, WPS_AUTHKEY_LEN, 4, addr, len, hash);
+./wps/wps_registrar.c:1820:	if (os_memcmp(wps->peer_hash1, hash, WPS_HASH_LEN) != 0) {
+./wps/wps_registrar.c:1823:		wps->config_error = WPS_CFG_DEV_PASSWORD_AUTH_FAILURE;
+./wps/wps_registrar.c:1824:		wps_pwd_auth_fail_event(wps->wps, 0, 1);
+./wps/wps_registrar.c:1835:static int wps_process_e_snonce2(struct wps_data *wps, const u8 *e_snonce2)
+./wps/wps_registrar.c:1852:	addr[1] = wps->psk2;
+./wps/wps_registrar.c:1854:	addr[2] = wpabuf_head(wps->dh_pubkey_e);
+./wps/wps_registrar.c:1855:	len[2] = wpabuf_len(wps->dh_pubkey_e);
+./wps/wps_registrar.c:1856:	addr[3] = wpabuf_head(wps->dh_pubkey_r);
+./wps/wps_registrar.c:1857:	len[3] = wpabuf_len(wps->dh_pubkey_r);
+./wps/wps_registrar.c:1858:	hmac_sha256_vector(wps->authkey, WPS_AUTHKEY_LEN, 4, addr, len, hash);
+./wps/wps_registrar.c:1860:	if (os_memcmp(wps->peer_hash2, hash, WPS_HASH_LEN) != 0) {
+./wps/wps_registrar.c:1863:		wps_registrar_invalidate_pin(wps->wps->registrar, wps->uuid_e);
+./wps/wps_registrar.c:1864:		wps->config_error = WPS_CFG_DEV_PASSWORD_AUTH_FAILURE;
+./wps/wps_registrar.c:1865:		wps_pwd_auth_fail_event(wps->wps, 0, 2);
+./wps/wps_registrar.c:1871:	wps->wps_pin_revealed = 0;
+./wps/wps_registrar.c:1872:	wps_registrar_unlock_pin(wps->wps->registrar, wps->uuid_e);
+./wps/wps_registrar.c:1878:static int wps_process_mac_addr(struct wps_data *wps, const u8 *mac_addr)
+./wps/wps_registrar.c:1887:	os_memcpy(wps->mac_addr_e, mac_addr, ETH_ALEN);
+./wps/wps_registrar.c:1888:	os_memcpy(wps->peer_dev.mac_addr, mac_addr, ETH_ALEN);
+./wps/wps_registrar.c:1894:static int wps_process_pubkey(struct wps_data *wps, const u8 *pk,
+./wps/wps_registrar.c:1903:	if (wps->wps->oob_conf.pubkey_hash != NULL) {
+./wps/wps_registrar.c:1910:			      wpabuf_head(wps->wps->oob_conf.pubkey_hash),
+./wps/wps_registrar.c:1918:	wpabuf_free(wps->dh_pubkey_e);
+./wps/wps_registrar.c:1919:	wps->dh_pubkey_e = wpabuf_alloc_copy(pk, pk_len);
+./wps/wps_registrar.c:1920:	if (wps->dh_pubkey_e == NULL)
+./wps/wps_registrar.c:1933:static int wps_process_auth_type_flags(struct wps_data *wps, const u8 *auth)
+./wps/wps_registrar.c:1947:	wps->auth_type = wps->wps->auth_types & auth_types;
+./wps/wps_registrar.c:1948:	if (wps->auth_type == 0) {
+./wps/wps_registrar.c:1951:			   wps->wps->auth_types, auth_types);
+./wps/wps_registrar.c:1963:		wps->auth_type = wps->wps->auth_types;
+./wps/wps_registrar.c:1973:static int wps_process_encr_type_flags(struct wps_data *wps, const u8 *encr)
+./wps/wps_registrar.c:1987:	wps->encr_type = wps->wps->encr_types & encr_types;
+./wps/wps_registrar.c:1988:	if (wps->encr_type == 0) {
+./wps/wps_registrar.c:1991:			   wps->wps->encr_types, encr_types);
+./wps/wps_registrar.c:2003:		wps->encr_type = wps->wps->encr_types;
+./wps/wps_registrar.c:2013:static int wps_process_conn_type_flags(struct wps_data *wps, const u8 *conn)
+./wps/wps_registrar.c:2028:static int wps_process_config_methods(struct wps_data *wps, const u8 *methods)
+./wps/wps_registrar.c:2051:	if (!(m & WPS_CONFIG_DISPLAY) && !wps->use_psk_key) {
+./wps/wps_registrar.c:2059:		wps->use_psk_key = 1;
+./wps/wps_registrar.c:2066:static int wps_process_wps_state(struct wps_data *wps, const u8 *state)
+./wps/wps_registrar.c:2081:static int wps_process_assoc_state(struct wps_data *wps, const u8 *assoc)
+./wps/wps_registrar.c:2097:static int wps_process_config_error(struct wps_data *wps, const u8 *err)
+./wps/wps_registrar.c:2113:static enum wps_process_res wps_process_m1(struct wps_data *wps,
+./wps/wps_registrar.c:2118:	if (wps->state != RECV_M1) {
+./wps/wps_registrar.c:2120:			   "receiving M1", wps->state);
+./wps/wps_registrar.c:2124:	if (wps_process_uuid_e(wps, attr->uuid_e) ||
+./wps/wps_registrar.c:2125:	    wps_process_mac_addr(wps, attr->mac_addr) ||
+./wps/wps_registrar.c:2126:	    wps_process_enrollee_nonce(wps, attr->enrollee_nonce) ||
+./wps/wps_registrar.c:2127:	    wps_process_pubkey(wps, attr->public_key, attr->public_key_len) ||
+./wps/wps_registrar.c:2128:	    wps_process_auth_type_flags(wps, attr->auth_type_flags) ||
+./wps/wps_registrar.c:2129:	    wps_process_encr_type_flags(wps, attr->encr_type_flags) ||
+./wps/wps_registrar.c:2130:	    wps_process_conn_type_flags(wps, attr->conn_type_flags) ||
+./wps/wps_registrar.c:2131:	    wps_process_config_methods(wps, attr->config_methods) ||
+./wps/wps_registrar.c:2132:	    wps_process_wps_state(wps, attr->wps_state) ||
+./wps/wps_registrar.c:2133:	    wps_process_device_attrs(&wps->peer_dev, attr) ||
+./wps/wps_registrar.c:2134:	    wps_process_rf_bands(&wps->peer_dev, attr->rf_bands) ||
+./wps/wps_registrar.c:2135:	    wps_process_assoc_state(wps, attr->assoc_state) ||
+./wps/wps_registrar.c:2136:	    wps_process_dev_password_id(wps, attr->dev_password_id) ||
+./wps/wps_registrar.c:2137:	    wps_process_config_error(wps, attr->config_error) ||
+./wps/wps_registrar.c:2138:	    wps_process_os_version(&wps->peer_dev, attr->os_version))
+./wps/wps_registrar.c:2143:	if (wps->dev_pw_id < 0x10 &&
+./wps/wps_registrar.c:2144:	    wps->dev_pw_id != DEV_PW_DEFAULT &&
+./wps/wps_registrar.c:2145:	    wps->dev_pw_id != DEV_PW_USER_SPECIFIED &&
+./wps/wps_registrar.c:2146:	    wps->dev_pw_id != DEV_PW_MACHINE_SPECIFIED &&
+./wps/wps_registrar.c:2147:	    wps->dev_pw_id != DEV_PW_REGISTRAR_SPECIFIED &&
+./wps/wps_registrar.c:2148:	    (wps->dev_pw_id != DEV_PW_PUSHBUTTON ||
+./wps/wps_registrar.c:2149:	     !wps->wps->registrar->pbc)) {
+./wps/wps_registrar.c:2151:			   wps->dev_pw_id);
+./wps/wps_registrar.c:2152:		wps->state = SEND_M2D;
+./wps/wps_registrar.c:2159:	if (wps->dev_pw_id >= 0x10 &&
+./wps/wps_registrar.c:2160:	    wps->dev_pw_id != wps->wps->oob_dev_pw_id) {
+./wps/wps_registrar.c:2162:			   "%d mismatch", wps->dev_pw_id);
+./wps/wps_registrar.c:2163:		wps->state = SEND_M2D;
+./wps/wps_registrar.c:2168:	if (wps->dev_pw_id == DEV_PW_PUSHBUTTON) {
+./wps/wps_registrar.c:2169:		if (wps->wps->registrar->force_pbc_overlap ||
+./wps/wps_registrar.c:2170:		    wps_registrar_pbc_overlap(wps->wps->registrar,
+./wps/wps_registrar.c:2171:					      wps->mac_addr_e, wps->uuid_e)) {
+./wps/wps_registrar.c:2174:			wps->state = SEND_M2D;
+./wps/wps_registrar.c:2175:			wps->config_error = WPS_CFG_MULTIPLE_PBC_DETECTED;
+./wps/wps_registrar.c:2176:			wps_pbc_overlap_event(wps->wps);
+./wps/wps_registrar.c:2177:			wps->wps->registrar->force_pbc_overlap = 1;
+./wps/wps_registrar.c:2180:		wps_registrar_add_pbc_session(wps->wps->registrar,
+./wps/wps_registrar.c:2181:					      wps->mac_addr_e, wps->uuid_e);
+./wps/wps_registrar.c:2182:		wps->pbc = 1;
+./wps/wps_registrar.c:2193:	if (!wps->use_psk_key &&
+./wps/wps_registrar.c:2194:	    wps->peer_dev.manufacturer &&
+./wps/wps_registrar.c:2195:	    os_strncmp(wps->peer_dev.manufacturer, "Apple ", 6) == 0 &&
+./wps/wps_registrar.c:2196:	    wps->peer_dev.model_name &&
+./wps/wps_registrar.c:2197:	    os_strcmp(wps->peer_dev.model_name, "AirPort") == 0) {
+./wps/wps_registrar.c:2200:		wps->use_psk_key = 1;
+./wps/wps_registrar.c:2205:	wps->state = SEND_M2;
+./wps/wps_registrar.c:2210:static enum wps_process_res wps_process_m3(struct wps_data *wps,
+./wps/wps_registrar.c:2216:	if (wps->state != RECV_M3) {
+./wps/wps_registrar.c:2218:			   "receiving M3", wps->state);
+./wps/wps_registrar.c:2219:		wps->state = SEND_WSC_NACK;
+./wps/wps_registrar.c:2223:	if (wps->pbc && wps->wps->registrar->force_pbc_overlap) {
+./wps/wps_registrar.c:2226:		wps->state = SEND_WSC_NACK;
+./wps/wps_registrar.c:2227:		wps->config_error = WPS_CFG_MULTIPLE_PBC_DETECTED;
+./wps/wps_registrar.c:2231:	if (wps_process_registrar_nonce(wps, attr->registrar_nonce) ||
+./wps/wps_registrar.c:2232:	    wps_process_authenticator(wps, attr->authenticator, msg) ||
+./wps/wps_registrar.c:2233:	    wps_process_e_hash1(wps, attr->e_hash1) ||
+./wps/wps_registrar.c:2234:	    wps_process_e_hash2(wps, attr->e_hash2)) {
+./wps/wps_registrar.c:2235:		wps->state = SEND_WSC_NACK;
+./wps/wps_registrar.c:2239:	wps->state = SEND_M4;
+./wps/wps_registrar.c:2244:static enum wps_process_res wps_process_m5(struct wps_data *wps,
+./wps/wps_registrar.c:2253:	if (wps->state != RECV_M5) {
+./wps/wps_registrar.c:2255:			   "receiving M5", wps->state);
+./wps/wps_registrar.c:2257:		wps->state = SEND_WSC_NACK;
+./wps/wps_registrar.c:2260:		wps->state = RECV_M5;
+./wps/wps_registrar.c:2264:	if (wps->pbc && wps->wps->registrar->force_pbc_overlap) {
+./wps/wps_registrar.c:2267:		wps->state = SEND_WSC_NACK;
+./wps/wps_registrar.c:2268:		wps->config_error = WPS_CFG_MULTIPLE_PBC_DETECTED;
+./wps/wps_registrar.c:2272:	if (wps_process_registrar_nonce(wps, attr->registrar_nonce) ||
+./wps/wps_registrar.c:2273:	    wps_process_authenticator(wps, attr->authenticator, msg)) {
+./wps/wps_registrar.c:2275:		wps->state = SEND_WSC_NACK;
+./wps/wps_registrar.c:2280:	decrypted = wps_decrypt_encr_settings(wps, attr->encr_settings,
+./wps/wps_registrar.c:2285:		wps->state = SEND_WSC_NACK;
+./wps/wps_registrar.c:2292:	    wps_process_key_wrap_auth(wps, decrypted, eattr.key_wrap_auth) ||
+./wps/wps_registrar.c:2293:	    wps_process_e_snonce1(wps, eattr.e_snonce1)) {
+./wps/wps_registrar.c:2295:		wps->state = SEND_WSC_NACK;
+./wps/wps_registrar.c:2300:	wps->state = SEND_M6;
+./wps/wps_registrar.c:2305:static void wps_sta_cred_cb(struct wps_data *wps)
+./wps/wps_registrar.c:2312:	if (wps->cred.auth_type & WPS_AUTH_WPA2PSK)
+./wps/wps_registrar.c:2313:		wps->cred.auth_type = WPS_AUTH_WPA2PSK;
+./wps/wps_registrar.c:2314:	else if (wps->cred.auth_type & WPS_AUTH_WPAPSK)
+./wps/wps_registrar.c:2315:		wps->cred.auth_type = WPS_AUTH_WPAPSK;
+./wps/wps_registrar.c:2316:	if (wps->cred.encr_type & WPS_ENCR_AES)
+./wps/wps_registrar.c:2317:		wps->cred.encr_type = WPS_ENCR_AES;
+./wps/wps_registrar.c:2318:	else if (wps->cred.encr_type & WPS_ENCR_TKIP)
+./wps/wps_registrar.c:2319:		wps->cred.encr_type = WPS_ENCR_TKIP;
+./wps/wps_registrar.c:2322:	if (wps->wps->cred_cb)
+./wps/wps_registrar.c:2323:		wps->wps->cred_cb(wps->wps->cb_ctx, &wps->cred);
+./wps/wps_registrar.c:2340:static int wps_process_ap_settings_r(struct wps_data *wps,
+./wps/wps_registrar.c:2343:	if (wps->wps->ap || wps->er)
+./wps/wps_registrar.c:2347:	if (wps_process_ap_settings(attr, &wps->cred) < 0)
+./wps/wps_registrar.c:2351:	if(wps->cred.key_len > 0)
+./wps/wps_registrar.c:2353:		wps->key = strdup(wps->cred.key);
+./wps/wps_registrar.c:2355:	if(wps->cred.ssid_len > 0)
+./wps/wps_registrar.c:2357:		wps->essid = strdup(wps->cred.ssid);
+./wps/wps_registrar.c:2360:	if (wps->new_ap_settings) {
+./wps/wps_registrar.c:2363:		wps_cred_update(&wps->cred, wps->new_ap_settings);
+./wps/wps_registrar.c:2370:		if (wps->ap_settings_cb) {
+./wps/wps_registrar.c:2371:			wps->ap_settings_cb(wps->ap_settings_cb_ctx,
+./wps/wps_registrar.c:2372:					    &wps->cred);
+./wps/wps_registrar.c:2375:		wps_sta_cred_cb(wps);
+./wps/wps_registrar.c:2381:static enum wps_process_res wps_process_m7(struct wps_data *wps,
+./wps/wps_registrar.c:2390:	if (wps->state != RECV_M7) {
+./wps/wps_registrar.c:2392:			   "receiving M7", wps->state);
+./wps/wps_registrar.c:2394:		wps->state = SEND_WSC_NACK;
+./wps/wps_registrar.c:2397:		wps->state = RECV_M7;
+./wps/wps_registrar.c:2401:	if (wps->pbc && wps->wps->registrar->force_pbc_overlap) {
+./wps/wps_registrar.c:2404:		wps->state = SEND_WSC_NACK;
+./wps/wps_registrar.c:2405:		wps->config_error = WPS_CFG_MULTIPLE_PBC_DETECTED;
+./wps/wps_registrar.c:2409:	if (wps_process_registrar_nonce(wps, attr->registrar_nonce) ||
+./wps/wps_registrar.c:2410:	    wps_process_authenticator(wps, attr->authenticator, msg)) {
+./wps/wps_registrar.c:2412:		wps->state = SEND_WSC_NACK;
+./wps/wps_registrar.c:2417:	decrypted = wps_decrypt_encr_settings(wps, attr->encr_settings,
+./wps/wps_registrar.c:2422:		wps->state = SEND_WSC_NACK;
+./wps/wps_registrar.c:2431:	    wps_process_key_wrap_auth(wps, decrypted, eattr.key_wrap_auth) ||
+./wps/wps_registrar.c:2432:	    wps_process_e_snonce2(wps, eattr.e_snonce2) ||
+./wps/wps_registrar.c:2433:	    wps_process_ap_settings_r(wps, &eattr)) {
+./wps/wps_registrar.c:2437:		wps->state = SEND_WSC_NACK;
+./wps/wps_registrar.c:2444:		wps_process_ap_settings_r(wps, &eattr);
+./wps/wps_registrar.c:2449:	wps->state = SEND_M8;
+./wps/wps_registrar.c:2454:static enum wps_process_res wps_process_wsc_msg(struct wps_data *wps,
+./wps/wps_registrar.c:2480:	     os_memcmp(wps->nonce_r, attr.registrar_nonce,
+./wps/wps_registrar.c:2489:		if (wps->wps->wps_upnp && attr.mac_addr) {
+./wps/wps_registrar.c:2491:			wps_free_pending_msgs(wps->wps->upnp_msgs);
+./wps/wps_registrar.c:2492:			wps->wps->upnp_msgs = NULL;
+./wps/wps_registrar.c:2495:				wps->wps->wps_upnp, attr.mac_addr,
+./wps/wps_registrar.c:2499:		ret = wps_process_m1(wps, &attr);
+./wps/wps_registrar.c:2502:		ret = wps_process_m3(wps, msg, &attr);
+./wps/wps_registrar.c:2503:		if (ret == WPS_FAILURE || wps->state == SEND_WSC_NACK)
+./wps/wps_registrar.c:2504:			wps_fail_event(wps->wps, WPS_M3);
+./wps/wps_registrar.c:2507:		ret = wps_process_m5(wps, msg, &attr);
+./wps/wps_registrar.c:2508:		if (ret == WPS_FAILURE || wps->state == SEND_WSC_NACK)
+./wps/wps_registrar.c:2509:			wps_fail_event(wps->wps, WPS_M5);
+./wps/wps_registrar.c:2512:		ret = wps_process_m7(wps, msg, &attr);
+./wps/wps_registrar.c:2513:		if (ret == WPS_FAILURE || wps->state == SEND_WSC_NACK)
+./wps/wps_registrar.c:2514:			wps_fail_event(wps->wps, WPS_M7);
+./wps/wps_registrar.c:2527:		wpabuf_free(wps->last_msg);
+./wps/wps_registrar.c:2529:		wps->last_msg = wpabuf_dup(msg);
+./wps/wps_registrar.c:2537:static enum wps_process_res wps_process_wsc_ack(struct wps_data *wps,
+./wps/wps_registrar.c:2565:	if (wps->wps->wps_upnp && wps->ext_reg && wps->state == RECV_M2D_ACK &&
+./wps/wps_registrar.c:2566:	    upnp_wps_subscribers(wps->wps->wps_upnp)) {
+./wps/wps_registrar.c:2567:		if (wps->wps->upnp_msgs)
+./wps/wps_registrar.c:2576:	    os_memcmp(wps->nonce_r, attr.registrar_nonce, WPS_NONCE_LEN) != 0)
+./wps/wps_registrar.c:2583:	    os_memcmp(wps->nonce_e, attr.enrollee_nonce, WPS_NONCE_LEN) != 0) {
+./wps/wps_registrar.c:2588:	if (wps->state == RECV_M2D_ACK) {
+./wps/wps_registrar.c:2590:		if (wps->wps->wps_upnp &&
+./wps/wps_registrar.c:2591:		    upnp_wps_subscribers(wps->wps->wps_upnp)) {
+./wps/wps_registrar.c:2592:			if (wps->wps->upnp_msgs)
+./wps/wps_registrar.c:2594:			if (wps->ext_reg == 0)
+./wps/wps_registrar.c:2595:				wps->ext_reg = 1;
+./wps/wps_registrar.c:2610:static enum wps_process_res wps_process_wsc_nack(struct wps_data *wps,
+./wps/wps_registrar.c:2618:	old_state = wps->state;
+./wps/wps_registrar.c:2619:	wps->state = SEND_WSC_NACK;
+./wps/wps_registrar.c:2642:	if (wps->wps->wps_upnp && wps->ext_reg) {
+./wps/wps_registrar.c:2650:	    os_memcmp(wps->nonce_r, attr.registrar_nonce, WPS_NONCE_LEN) != 0)
+./wps/wps_registrar.c:2657:	    os_memcmp(wps->nonce_e, attr.enrollee_nonce, WPS_NONCE_LEN) != 0) {
+./wps/wps_registrar.c:2673:		wps_fail_event(wps->wps, WPS_M2);
+./wps/wps_registrar.c:2676:		wps_fail_event(wps->wps, WPS_M4);
+./wps/wps_registrar.c:2679:		wps_fail_event(wps->wps, WPS_M6);
+./wps/wps_registrar.c:2682:		wps_fail_event(wps->wps, WPS_M8);
+./wps/wps_registrar.c:2692:static enum wps_process_res wps_process_wsc_done(struct wps_data *wps,
+./wps/wps_registrar.c:2699:	if (wps->state != RECV_DONE &&
+./wps/wps_registrar.c:2700:	    (!wps->wps->wps_upnp || !wps->ext_reg)) {
+./wps/wps_registrar.c:2702:			   "receiving WSC_Done", wps->state);
+./wps/wps_registrar.c:2727:	if (wps->wps->wps_upnp && wps->ext_reg) {
+./wps/wps_registrar.c:2730:		wps_device_store(wps->wps->registrar, &wps->peer_dev,
+./wps/wps_registrar.c:2731:				 wps->uuid_e);
+./wps/wps_registrar.c:2737:	    os_memcmp(wps->nonce_r, attr.registrar_nonce, WPS_NONCE_LEN) != 0)
+./wps/wps_registrar.c:2744:	    os_memcmp(wps->nonce_e, attr.enrollee_nonce, WPS_NONCE_LEN) != 0) {
+./wps/wps_registrar.c:2752:	wps_device_store(wps->wps->registrar, &wps->peer_dev,
+./wps/wps_registrar.c:2753:			 wps->uuid_e);
+./wps/wps_registrar.c:2755:	if (wps->wps->wps_state == WPS_STATE_NOT_CONFIGURED && wps->new_psk &&
+./wps/wps_registrar.c:2756:	    wps->wps->ap && !wps->wps->registrar->disable_auto_conf) {
+./wps/wps_registrar.c:2763:		os_memcpy(cred.ssid, wps->wps->ssid, wps->wps->ssid_len);
+./wps/wps_registrar.c:2764:		cred.ssid_len = wps->wps->ssid_len;
+./wps/wps_registrar.c:2767:		os_memcpy(cred.key, wps->new_psk, wps->new_psk_len);
+./wps/wps_registrar.c:2768:		cred.key_len = wps->new_psk_len;
+./wps/wps_registrar.c:2770:		wps->wps->wps_state = WPS_STATE_CONFIGURED;
+./wps/wps_registrar.c:2773:				      wps->new_psk, wps->new_psk_len);
+./wps/wps_registrar.c:2774:		if (wps->wps->cred_cb)
+./wps/wps_registrar.c:2775:			wps->wps->cred_cb(wps->wps->cb_ctx, &cred);
+./wps/wps_registrar.c:2777:		os_free(wps->new_psk);
+./wps/wps_registrar.c:2778:		wps->new_psk = NULL;
+./wps/wps_registrar.c:2781:	if (!wps->wps->ap && !wps->er)
+./wps/wps_registrar.c:2782:		wps_sta_cred_cb(wps);
+./wps/wps_registrar.c:2784:	if (wps->new_psk) {
+./wps/wps_registrar.c:2785:		if (wps_cb_new_psk(wps->wps->registrar, wps->mac_addr_e,
+./wps/wps_registrar.c:2786:				   wps->new_psk, wps->new_psk_len)) {
+./wps/wps_registrar.c:2790:		os_free(wps->new_psk);
+./wps/wps_registrar.c:2791:		wps->new_psk = NULL;
+./wps/wps_registrar.c:2794:	wps_cb_reg_success(wps->wps->registrar, wps->mac_addr_e, wps->uuid_e);
+./wps/wps_registrar.c:2796:	if (wps->pbc) {
+./wps/wps_registrar.c:2797:		wps_registrar_remove_pbc_session(wps->wps->registrar,
+./wps/wps_registrar.c:2798:						 wps->mac_addr_e, wps->uuid_e);
+./wps/wps_registrar.c:2799:		wps_registrar_pbc_completed(wps->wps->registrar);
+./wps/wps_registrar.c:2801:		wps_registrar_pin_completed(wps->wps->registrar);
+./wps/wps_registrar.c:2806:	wps_success_event(wps->wps);
+./wps/wps_registrar.c:2812:enum wps_process_res wps_registrar_process_msg(struct wps_data *wps,
+./wps/wps_registrar.c:2823:	if (wps->wps->wps_upnp && op_code == WSC_MSG && wps->ext_reg == 1) {
+./wps/wps_registrar.c:2827:			wps->ext_reg = 2; /* past M2/M2D phase */
+./wps/wps_registrar.c:2829:	if (wps->ext_reg > 1)
+./wps/wps_registrar.c:2830:		wps_registrar_free_pending_m2(wps->wps);
+./wps/wps_registrar.c:2831:	if (wps->wps->wps_upnp && wps->ext_reg &&
+./wps/wps_registrar.c:2832:	    wps->wps->upnp_msgs == NULL &&
+./wps/wps_registrar.c:2843:		upnp_wps_device_send_wlan_event(wps->wps->wps_upnp,
+./wps/wps_registrar.c:2844:						wps->mac_addr_e,
+./wps/wps_registrar.c:2849:	} else if (wps->wps->wps_upnp && wps->ext_reg && op_code == WSC_MSG) {
+./wps/wps_registrar.c:2858:		return wps_process_wsc_msg(wps, msg);
+./wps/wps_registrar.c:2860:		return wps_process_wsc_ack(wps, msg);
+./wps/wps_registrar.c:2862:		return wps_process_wsc_nack(wps, msg);
+./wps/wps_registrar.c:2864:		ret = wps_process_wsc_done(wps, msg);
+./wps/wps_registrar.c:2866:			wps->state = SEND_WSC_NACK;
+./wps/wps_registrar.c:2867:			wps_fail_event(wps->wps, WPS_WSC_DONE);
+./wps/wps_registrar.c:2918:	if (reg->wps->wps_upnp == NULL)
+./wps/wps_registrar.c:2921:	dl_list_for_each(s, &reg->wps->wps_upnp->subscriptions,
+./wps/wps_registrar.c:2956:			reg->wps->config_methods & ~WPS_CONFIG_PUSHBUTTON;
+./wps/wps_ufd.c:23:#include "wps/wps.h"
+./wps/wps_ufd.c:24:#include "wps/wps_i.h"
+./wps/wps_ufd.c:83:static int get_file_name(struct wps_context *wps, int registrar,
+./wps/wps_ufd.c:86:	switch (wps->oob_conf.oob_method) {
+./wps/wps_ufd.c:97:			u8 *mac_addr = wps->dev.mac_addr;
+./wps/wps_ufd.c:126:static void * init_ufd(struct wps_context *wps,
+./wps/wps_ufd.c:139:	write_f = wps->oob_conf.oob_method == OOB_METHOD_DEV_PWD_E ?
+./wps/wps_ufd.c:142:	if (get_file_name(wps, registrar, path, filename) < 0) {
+./wps/wps_enrollee.c:24:static int wps_build_mac_addr(struct wps_data *wps, struct wpabuf *msg)
+./wps/wps_enrollee.c:29:	wpabuf_put_data(msg, wps->mac_addr_e, ETH_ALEN);
+./wps/wps_enrollee.c:34:static int wps_build_wps_state(struct wps_data *wps, struct wpabuf *msg)
+./wps/wps_enrollee.c:37:	if (wps->wps->ap)
+./wps/wps_enrollee.c:38:		state = wps->wps->wps_state;
+./wps/wps_enrollee.c:50:static int wps_build_e_hash(struct wps_data *wps, struct wpabuf *msg)
+./wps/wps_enrollee.c:56:	if (os_get_random(wps->snonce, 2 * WPS_SECRET_NONCE_LEN) < 0)
+./wps/wps_enrollee.c:58:	wpa_hexdump(MSG_DEBUG, "WPS: E-S1", wps->snonce, WPS_SECRET_NONCE_LEN);
+./wps/wps_enrollee.c:60:		    wps->snonce + WPS_SECRET_NONCE_LEN, WPS_SECRET_NONCE_LEN);
+./wps/wps_enrollee.c:62:	if (wps->dh_pubkey_e == NULL || wps->dh_pubkey_r == NULL) {
+./wps/wps_enrollee.c:73:	addr[0] = wps->snonce;
+./wps/wps_enrollee.c:75:	addr[1] = wps->psk1;
+./wps/wps_enrollee.c:77:	addr[2] = wpabuf_head(wps->dh_pubkey_e);
+./wps/wps_enrollee.c:78:	len[2] = wpabuf_len(wps->dh_pubkey_e);
+./wps/wps_enrollee.c:79:	addr[3] = wpabuf_head(wps->dh_pubkey_r);
+./wps/wps_enrollee.c:80:	len[3] = wpabuf_len(wps->dh_pubkey_r);
+./wps/wps_enrollee.c:81:	hmac_sha256_vector(wps->authkey, WPS_AUTHKEY_LEN, 4, addr, len, hash);
+./wps/wps_enrollee.c:89:	addr[0] = wps->snonce + WPS_SECRET_NONCE_LEN;
+./wps/wps_enrollee.c:90:	addr[1] = wps->psk2;
+./wps/wps_enrollee.c:91:	hmac_sha256_vector(wps->authkey, WPS_AUTHKEY_LEN, 4, addr, len, hash);
+./wps/wps_enrollee.c:98:static int wps_build_e_snonce1(struct wps_data *wps, struct wpabuf *msg)
+./wps/wps_enrollee.c:103:	wpabuf_put_data(msg, wps->snonce, WPS_SECRET_NONCE_LEN);
+./wps/wps_enrollee.c:108:static int wps_build_e_snonce2(struct wps_data *wps, struct wpabuf *msg)
+./wps/wps_enrollee.c:113:	wpabuf_put_data(msg, wps->snonce + WPS_SECRET_NONCE_LEN,
+./wps/wps_enrollee.c:119:static struct wpabuf * wps_build_m1(struct wps_data *wps)
+./wps/wps_enrollee.c:123:	if (os_get_random(wps->nonce_e, WPS_NONCE_LEN) < 0)
+./wps/wps_enrollee.c:126:		    wps->nonce_e, WPS_NONCE_LEN);
+./wps/wps_enrollee.c:135:	    wps_build_uuid_e(msg, wps->uuid_e) ||
+./wps/wps_enrollee.c:136:	    wps_build_mac_addr(wps, msg) ||
+./wps/wps_enrollee.c:137:	    wps_build_enrollee_nonce(wps, msg) ||
+./wps/wps_enrollee.c:138:	    wps_build_public_key(wps, msg) ||
+./wps/wps_enrollee.c:139:	    wps_build_auth_type_flags(wps, msg) ||
+./wps/wps_enrollee.c:140:	    wps_build_encr_type_flags(wps, msg) ||
+./wps/wps_enrollee.c:141:	    wps_build_conn_type_flags(wps, msg) ||
+./wps/wps_enrollee.c:142:	    wps_build_config_methods(msg, wps->wps->config_methods) ||
+./wps/wps_enrollee.c:143:	    wps_build_wps_state(wps, msg) ||
+./wps/wps_enrollee.c:144:	    wps_build_device_attrs(&wps->wps->dev, msg) ||
+./wps/wps_enrollee.c:145:	    wps_build_rf_bands(&wps->wps->dev, msg) ||
+./wps/wps_enrollee.c:146:	    wps_build_assoc_state(wps, msg) ||
+./wps/wps_enrollee.c:147:	    wps_build_dev_password_id(msg, wps->dev_pw_id) ||
+./wps/wps_enrollee.c:149:	    wps_build_os_version(&wps->wps->dev, msg)) {
+./wps/wps_enrollee.c:154:	wps->state = RECV_M2;
+./wps/wps_enrollee.c:159:static struct wpabuf * wps_build_m3(struct wps_data *wps)
+./wps/wps_enrollee.c:165:	if (wps->dev_password == NULL) {
+./wps/wps_enrollee.c:169:	wps_derive_psk(wps, wps->dev_password, wps->dev_password_len);
+./wps/wps_enrollee.c:177:	    wps_build_registrar_nonce(wps, msg) ||
+./wps/wps_enrollee.c:178:	    wps_build_e_hash(wps, msg) ||
+./wps/wps_enrollee.c:179:	    wps_build_authenticator(wps, msg)) {
+./wps/wps_enrollee.c:184:	wps->state = RECV_M4;
+./wps/wps_enrollee.c:189:static struct wpabuf * wps_build_m5(struct wps_data *wps)
+./wps/wps_enrollee.c:207:	    wps_build_registrar_nonce(wps, msg) ||
+./wps/wps_enrollee.c:208:	    wps_build_e_snonce1(wps, plain) ||
+./wps/wps_enrollee.c:209:	    wps_build_key_wrap_auth(wps, plain) ||
+./wps/wps_enrollee.c:210:	    wps_build_encr_settings(wps, msg, plain) ||
+./wps/wps_enrollee.c:211:	    wps_build_authenticator(wps, msg)) {
+./wps/wps_enrollee.c:218:	wps->state = RECV_M6;
+./wps/wps_enrollee.c:223:static int wps_build_cred_ssid(struct wps_data *wps, struct wpabuf *msg)
+./wps/wps_enrollee.c:227:	wpabuf_put_be16(msg, wps->wps->ssid_len);
+./wps/wps_enrollee.c:228:	wpabuf_put_data(msg, wps->wps->ssid, wps->wps->ssid_len);
+./wps/wps_enrollee.c:233:static int wps_build_cred_auth_type(struct wps_data *wps, struct wpabuf *msg)
+./wps/wps_enrollee.c:238:	wpabuf_put_be16(msg, wps->wps->auth_types);
+./wps/wps_enrollee.c:243:static int wps_build_cred_encr_type(struct wps_data *wps, struct wpabuf *msg)
+./wps/wps_enrollee.c:248:	wpabuf_put_be16(msg, wps->wps->encr_types);
+./wps/wps_enrollee.c:253:static int wps_build_cred_network_key(struct wps_data *wps, struct wpabuf *msg)
+./wps/wps_enrollee.c:257:	wpabuf_put_be16(msg, wps->wps->network_key_len);
+./wps/wps_enrollee.c:258:	wpabuf_put_data(msg, wps->wps->network_key, wps->wps->network_key_len);
+./wps/wps_enrollee.c:263:static int wps_build_cred_mac_addr(struct wps_data *wps, struct wpabuf *msg)
+./wps/wps_enrollee.c:268:	wpabuf_put_data(msg, wps->wps->dev.mac_addr, ETH_ALEN);
+./wps/wps_enrollee.c:273:static int wps_build_ap_settings(struct wps_data *wps, struct wpabuf *plain)
+./wps/wps_enrollee.c:275:	if (wps->wps->ap_settings) {
+./wps/wps_enrollee.c:277:		wpabuf_put_data(plain, wps->wps->ap_settings,
+./wps/wps_enrollee.c:278:				wps->wps->ap_settings_len);
+./wps/wps_enrollee.c:282:	return wps_build_cred_ssid(wps, plain) ||
+./wps/wps_enrollee.c:283:		wps_build_cred_mac_addr(wps, plain) ||
+./wps/wps_enrollee.c:284:		wps_build_cred_auth_type(wps, plain) ||
+./wps/wps_enrollee.c:285:		wps_build_cred_encr_type(wps, plain) ||
+./wps/wps_enrollee.c:286:		wps_build_cred_network_key(wps, plain);
+./wps/wps_enrollee.c:290:static struct wpabuf * wps_build_m7(struct wps_data *wps)
+./wps/wps_enrollee.c:296:	plain = wpabuf_alloc(500 + wps->wps->ap_settings_len);
+./wps/wps_enrollee.c:300:	msg = wpabuf_alloc(1000 + wps->wps->ap_settings_len);
+./wps/wps_enrollee.c:308:	    wps_build_registrar_nonce(wps, msg) ||
+./wps/wps_enrollee.c:309:	    wps_build_e_snonce2(wps, plain) ||
+./wps/wps_enrollee.c:310:	    (wps->wps->ap && wps_build_ap_settings(wps, plain)) ||
+./wps/wps_enrollee.c:311:	    wps_build_key_wrap_auth(wps, plain) ||
+./wps/wps_enrollee.c:312:	    wps_build_encr_settings(wps, msg, plain) ||
+./wps/wps_enrollee.c:313:	    wps_build_authenticator(wps, msg)) {
+./wps/wps_enrollee.c:320:	if (wps->wps->ap && wps->wps->registrar) {
+./wps/wps_enrollee.c:326:		wps_device_store(wps->wps->registrar, &wps->peer_dev,
+./wps/wps_enrollee.c:327:				 wps->uuid_r);
+./wps/wps_enrollee.c:330:	wps->state = RECV_M8;
+./wps/wps_enrollee.c:335:static struct wpabuf * wps_build_wsc_done(struct wps_data *wps)
+./wps/wps_enrollee.c:347:	    wps_build_enrollee_nonce(wps, msg) ||
+./wps/wps_enrollee.c:348:	    wps_build_registrar_nonce(wps, msg)) {
+./wps/wps_enrollee.c:353:	if (wps->wps->ap)
+./wps/wps_enrollee.c:354:		wps->state = RECV_ACK;
+./wps/wps_enrollee.c:356:		wps_success_event(wps->wps);
+./wps/wps_enrollee.c:357:		wps->state = WPS_FINISHED;
+./wps/wps_enrollee.c:363:static struct wpabuf * wps_build_wsc_ack(struct wps_data *wps)
+./wps/wps_enrollee.c:375:	    wps_build_enrollee_nonce(wps, msg) ||
+./wps/wps_enrollee.c:376:	    wps_build_registrar_nonce(wps, msg)) {
+./wps/wps_enrollee.c:385:static struct wpabuf * wps_build_wsc_nack(struct wps_data *wps)
+./wps/wps_enrollee.c:397:	    wps_build_enrollee_nonce(wps, msg) ||
+./wps/wps_enrollee.c:398:	    wps_build_registrar_nonce(wps, msg) ||
+./wps/wps_enrollee.c:399:	    wps_build_config_error(msg, wps->config_error)) {
+./wps/wps_enrollee.c:408:struct wpabuf * wps_enrollee_get_msg(struct wps_data *wps,
+./wps/wps_enrollee.c:413:	switch (wps->state) {
+./wps/wps_enrollee.c:415:		msg = wps_build_m1(wps);
+./wps/wps_enrollee.c:419:		msg = wps_build_m3(wps);
+./wps/wps_enrollee.c:423:		msg = wps_build_m5(wps);
+./wps/wps_enrollee.c:427:		msg = wps_build_m7(wps);
+./wps/wps_enrollee.c:431:		if (wps->wps->ap) {
+./wps/wps_enrollee.c:432:			msg = wps_build_wsc_nack(wps);
+./wps/wps_enrollee.c:436:		msg = wps_build_wsc_ack(wps);
+./wps/wps_enrollee.c:440:			wps->state = RECV_M2;
+./wps/wps_enrollee.c:444:		msg = wps_build_wsc_nack(wps);
+./wps/wps_enrollee.c:448:		msg = wps_build_wsc_done(wps);
+./wps/wps_enrollee.c:453:			   "a message", wps->state);
+./wps/wps_enrollee.c:461:		wpabuf_free(wps->last_msg);
+./wps/wps_enrollee.c:462:		wps->last_msg = wpabuf_dup(msg);
+./wps/wps_enrollee.c:469:static int wps_process_registrar_nonce(struct wps_data *wps, const u8 *r_nonce)
+./wps/wps_enrollee.c:476:	os_memcpy(wps->nonce_r, r_nonce, WPS_NONCE_LEN);
+./wps/wps_enrollee.c:478:		    wps->nonce_r, WPS_NONCE_LEN);
+./wps/wps_enrollee.c:484:static int wps_process_enrollee_nonce(struct wps_data *wps, const u8 *e_nonce)
+./wps/wps_enrollee.c:491:	if (os_memcmp(wps->nonce_e, e_nonce, WPS_NONCE_LEN) != 0) {
+./wps/wps_enrollee.c:500:static int wps_process_uuid_r(struct wps_data *wps, const u8 *uuid_r)
+./wps/wps_enrollee.c:507:	os_memcpy(wps->uuid_r, uuid_r, WPS_UUID_LEN);
+./wps/wps_enrollee.c:508:	wpa_hexdump(MSG_DEBUG, "WPS: UUID-R", wps->uuid_r, WPS_UUID_LEN);
+./wps/wps_enrollee.c:514:static int wps_process_pubkey(struct wps_data *wps, const u8 *pk,
+./wps/wps_enrollee.c:523:	if (wps->dev_pw_id != DEV_PW_DEFAULT &&
+./wps/wps_enrollee.c:524:	    wps->wps->oob_conf.pubkey_hash) {
+./wps/wps_enrollee.c:531:			      wpabuf_head(wps->wps->oob_conf.pubkey_hash),
+./wps/wps_enrollee.c:539:	wpabuf_free(wps->dh_pubkey_r);
+./wps/wps_enrollee.c:540:	wps->dh_pubkey_r = wpabuf_alloc_copy(pk, pk_len);
+./wps/wps_enrollee.c:541:	if (wps->dh_pubkey_r == NULL)
+./wps/wps_enrollee.c:544:	if (wps_derive_keys(wps) < 0)
+./wps/wps_enrollee.c:551:static int wps_process_r_hash1(struct wps_data *wps, const u8 *r_hash1)
+./wps/wps_enrollee.c:558:	os_memcpy(wps->peer_hash1, r_hash1, WPS_HASH_LEN);
+./wps/wps_enrollee.c:559:	wpa_hexdump(MSG_DEBUG, "WPS: R-Hash1", wps->peer_hash1, WPS_HASH_LEN);
+./wps/wps_enrollee.c:565:static int wps_process_r_hash2(struct wps_data *wps, const u8 *r_hash2)
+./wps/wps_enrollee.c:572:	os_memcpy(wps->peer_hash2, r_hash2, WPS_HASH_LEN);
+./wps/wps_enrollee.c:573:	wpa_hexdump(MSG_DEBUG, "WPS: R-Hash2", wps->peer_hash2, WPS_HASH_LEN);
+./wps/wps_enrollee.c:579:static int wps_process_r_snonce1(struct wps_data *wps, const u8 *r_snonce1)
+./wps/wps_enrollee.c:596:	addr[1] = wps->psk1;
+./wps/wps_enrollee.c:598:	addr[2] = wpabuf_head(wps->dh_pubkey_e);
+./wps/wps_enrollee.c:599:	len[2] = wpabuf_len(wps->dh_pubkey_e);
+./wps/wps_enrollee.c:600:	addr[3] = wpabuf_head(wps->dh_pubkey_r);
+./wps/wps_enrollee.c:601:	len[3] = wpabuf_len(wps->dh_pubkey_r);
+./wps/wps_enrollee.c:602:	hmac_sha256_vector(wps->authkey, WPS_AUTHKEY_LEN, 4, addr, len, hash);
+./wps/wps_enrollee.c:604:	if (os_memcmp(wps->peer_hash1, hash, WPS_HASH_LEN) != 0) {
+./wps/wps_enrollee.c:607:		wps->config_error = WPS_CFG_DEV_PASSWORD_AUTH_FAILURE;
+./wps/wps_enrollee.c:608:		wps_pwd_auth_fail_event(wps->wps, 1, 1);
+./wps/wps_enrollee.c:619:static int wps_process_r_snonce2(struct wps_data *wps, const u8 *r_snonce2)
+./wps/wps_enrollee.c:636:	addr[1] = wps->psk2;
+./wps/wps_enrollee.c:638:	addr[2] = wpabuf_head(wps->dh_pubkey_e);
+./wps/wps_enrollee.c:639:	len[2] = wpabuf_len(wps->dh_pubkey_e);
+./wps/wps_enrollee.c:640:	addr[3] = wpabuf_head(wps->dh_pubkey_r);
+./wps/wps_enrollee.c:641:	len[3] = wpabuf_len(wps->dh_pubkey_r);
+./wps/wps_enrollee.c:642:	hmac_sha256_vector(wps->authkey, WPS_AUTHKEY_LEN, 4, addr, len, hash);
+./wps/wps_enrollee.c:644:	if (os_memcmp(wps->peer_hash2, hash, WPS_HASH_LEN) != 0) {
+./wps/wps_enrollee.c:647:		wps->config_error = WPS_CFG_DEV_PASSWORD_AUTH_FAILURE;
+./wps/wps_enrollee.c:648:		wps_pwd_auth_fail_event(wps->wps, 1, 2);
+./wps/wps_enrollee.c:659:static int wps_process_cred_e(struct wps_data *wps, const u8 *cred,
+./wps/wps_enrollee.c:666:	os_memset(&wps->cred, 0, sizeof(wps->cred));
+./wps/wps_enrollee.c:669:	    wps_process_cred(&attr, &wps->cred))
+./wps/wps_enrollee.c:672:	if (os_memcmp(wps->cred.mac_addr, wps->wps->dev.mac_addr, ETH_ALEN) !=
+./wps/wps_enrollee.c:676:			   ")", MAC2STR(wps->cred.mac_addr),
+./wps/wps_enrollee.c:677:			   MAC2STR(wps->wps->dev.mac_addr));
+./wps/wps_enrollee.c:687:	if (wps->wps->cred_cb) {
+./wps/wps_enrollee.c:688:		wps->cred.cred_attr = cred - 4;
+./wps/wps_enrollee.c:689:		wps->cred.cred_attr_len = cred_len + 4;
+./wps/wps_enrollee.c:690:		wps->wps->cred_cb(wps->wps->cb_ctx, &wps->cred);
+./wps/wps_enrollee.c:691:		wps->cred.cred_attr = NULL;
+./wps/wps_enrollee.c:692:		wps->cred.cred_attr_len = 0;
+./wps/wps_enrollee.c:699:static int wps_process_creds(struct wps_data *wps, const u8 *cred[],
+./wps/wps_enrollee.c:704:	if (wps->wps->ap)
+./wps/wps_enrollee.c:714:		if (wps_process_cred_e(wps, cred[i], cred_len[i]))
+./wps/wps_enrollee.c:722:static int wps_process_ap_settings_e(struct wps_data *wps,
+./wps/wps_enrollee.c:728:	if (!wps->wps->ap)
+./wps/wps_enrollee.c:737:	if (os_memcmp(cred.mac_addr, wps->wps->dev.mac_addr, ETH_ALEN) !=
+./wps/wps_enrollee.c:742:			   MAC2STR(wps->wps->dev.mac_addr));
+./wps/wps_enrollee.c:752:	if (wps->wps->cred_cb) {
+./wps/wps_enrollee.c:755:		wps->wps->cred_cb(wps->wps->cb_ctx, &cred);
+./wps/wps_enrollee.c:762:static enum wps_process_res wps_process_m2(struct wps_data *wps,
+./wps/wps_enrollee.c:768:	if (wps->state != RECV_M2) {
+./wps/wps_enrollee.c:770:			   "receiving M2", wps->state);
+./wps/wps_enrollee.c:771:		wps->state = SEND_WSC_NACK;
+./wps/wps_enrollee.c:775:	if (wps_process_registrar_nonce(wps, attr->registrar_nonce) ||
+./wps/wps_enrollee.c:776:	    wps_process_enrollee_nonce(wps, attr->enrollee_nonce) ||
+./wps/wps_enrollee.c:777:	    wps_process_uuid_r(wps, attr->uuid_r)) {
+./wps/wps_enrollee.c:778:		wps->state = SEND_WSC_NACK;
+./wps/wps_enrollee.c:782:	if (wps->wps->ap &&
+./wps/wps_enrollee.c:783:	    (wps->wps->ap_setup_locked || wps->dev_password == NULL)) {
+./wps/wps_enrollee.c:786:		wps->config_error = WPS_CFG_SETUP_LOCKED;
+./wps/wps_enrollee.c:787:		wps->state = SEND_WSC_NACK;
+./wps/wps_enrollee.c:791:	if (wps_process_pubkey(wps, attr->public_key, attr->public_key_len) ||
+./wps/wps_enrollee.c:792:	    wps_process_authenticator(wps, attr->authenticator, msg) ||
+./wps/wps_enrollee.c:793:	    wps_process_device_attrs(&wps->peer_dev, attr)) {
+./wps/wps_enrollee.c:794:		wps->state = SEND_WSC_NACK;
+./wps/wps_enrollee.c:798:	wps->state = SEND_M3;
+./wps/wps_enrollee.c:803:static enum wps_process_res wps_process_m2d(struct wps_data *wps,
+./wps/wps_enrollee.c:808:	if (wps->state != RECV_M2) {
+./wps/wps_enrollee.c:810:			   "receiving M2D", wps->state);
+./wps/wps_enrollee.c:811:		wps->state = SEND_WSC_NACK;
+./wps/wps_enrollee.c:826:	if (wps->wps->event_cb) {
+./wps/wps_enrollee.c:850:		wps->wps->event_cb(wps->wps->cb_ctx, WPS_EV_M2D, &data);
+./wps/wps_enrollee.c:853:	wps->state = RECEIVED_M2D;
+./wps/wps_enrollee.c:858:static enum wps_process_res wps_process_m4(struct wps_data *wps,
+./wps/wps_enrollee.c:867:	if (wps->state != RECV_M4) {
+./wps/wps_enrollee.c:869:			   "receiving M4", wps->state);
+./wps/wps_enrollee.c:870:		wps->state = SEND_WSC_NACK;
+./wps/wps_enrollee.c:874:	if (wps_process_enrollee_nonce(wps, attr->enrollee_nonce) ||
+./wps/wps_enrollee.c:875:	    wps_process_authenticator(wps, attr->authenticator, msg) ||
+./wps/wps_enrollee.c:876:	    wps_process_r_hash1(wps, attr->r_hash1) ||
+./wps/wps_enrollee.c:877:	    wps_process_r_hash2(wps, attr->r_hash2)) {
+./wps/wps_enrollee.c:878:		wps->state = SEND_WSC_NACK;
+./wps/wps_enrollee.c:882:	decrypted = wps_decrypt_encr_settings(wps, attr->encr_settings,
+./wps/wps_enrollee.c:887:		wps->state = SEND_WSC_NACK;
+./wps/wps_enrollee.c:894:	    wps_process_key_wrap_auth(wps, decrypted, eattr.key_wrap_auth) ||
+./wps/wps_enrollee.c:895:	    wps_process_r_snonce1(wps, eattr.r_snonce1)) {
+./wps/wps_enrollee.c:897:		wps->state = SEND_WSC_NACK;
+./wps/wps_enrollee.c:902:	wps->state = SEND_M5;
+./wps/wps_enrollee.c:907:static enum wps_process_res wps_process_m6(struct wps_data *wps,
+./wps/wps_enrollee.c:916:	if (wps->state != RECV_M6) {
+./wps/wps_enrollee.c:918:			   "receiving M6", wps->state);
+./wps/wps_enrollee.c:919:		wps->state = SEND_WSC_NACK;
+./wps/wps_enrollee.c:923:	if (wps_process_enrollee_nonce(wps, attr->enrollee_nonce) ||
+./wps/wps_enrollee.c:924:	    wps_process_authenticator(wps, attr->authenticator, msg)) {
+./wps/wps_enrollee.c:925:		wps->state = SEND_WSC_NACK;
+./wps/wps_enrollee.c:929:	decrypted = wps_decrypt_encr_settings(wps, attr->encr_settings,
+./wps/wps_enrollee.c:934:		wps->state = SEND_WSC_NACK;
+./wps/wps_enrollee.c:941:	    wps_process_key_wrap_auth(wps, decrypted, eattr.key_wrap_auth) ||
+./wps/wps_enrollee.c:942:	    wps_process_r_snonce2(wps, eattr.r_snonce2)) {
+./wps/wps_enrollee.c:944:		wps->state = SEND_WSC_NACK;
+./wps/wps_enrollee.c:949:	wps->state = SEND_M7;
+./wps/wps_enrollee.c:954:static enum wps_process_res wps_process_m8(struct wps_data *wps,
+./wps/wps_enrollee.c:963:	if (wps->state != RECV_M8) {
+./wps/wps_enrollee.c:965:			   "receiving M8", wps->state);
+./wps/wps_enrollee.c:966:		wps->state = SEND_WSC_NACK;
+./wps/wps_enrollee.c:970:	if (wps_process_enrollee_nonce(wps, attr->enrollee_nonce) ||
+./wps/wps_enrollee.c:971:	    wps_process_authenticator(wps, attr->authenticator, msg)) {
+./wps/wps_enrollee.c:972:		wps->state = SEND_WSC_NACK;
+./wps/wps_enrollee.c:976:	decrypted = wps_decrypt_encr_settings(wps, attr->encr_settings,
+./wps/wps_enrollee.c:981:		wps->state = SEND_WSC_NACK;
+./wps/wps_enrollee.c:988:	    wps_process_key_wrap_auth(wps, decrypted, eattr.key_wrap_auth) ||
+./wps/wps_enrollee.c:989:	    wps_process_creds(wps, eattr.cred, eattr.cred_len,
+./wps/wps_enrollee.c:991:	    wps_process_ap_settings_e(wps, &eattr, decrypted)) {
+./wps/wps_enrollee.c:993:		wps->state = SEND_WSC_NACK;
+./wps/wps_enrollee.c:998:	wps->state = WPS_MSG_DONE;
+./wps/wps_enrollee.c:1003:static enum wps_process_res wps_process_wsc_msg(struct wps_data *wps,
+./wps/wps_enrollee.c:1021:	    os_memcmp(wps->nonce_e, attr.enrollee_nonce, WPS_NONCE_LEN) != 0) {
+./wps/wps_enrollee.c:1033:		ret = wps_process_m2(wps, msg, &attr);
+./wps/wps_enrollee.c:1036:		ret = wps_process_m2d(wps, &attr);
+./wps/wps_enrollee.c:1039:		ret = wps_process_m4(wps, msg, &attr);
+./wps/wps_enrollee.c:1040:		if (ret == WPS_FAILURE || wps->state == SEND_WSC_NACK)
+./wps/wps_enrollee.c:1041:			wps_fail_event(wps->wps, WPS_M4);
+./wps/wps_enrollee.c:1044:		ret = wps_process_m6(wps, msg, &attr);
+./wps/wps_enrollee.c:1045:		if (ret == WPS_FAILURE || wps->state == SEND_WSC_NACK)
+./wps/wps_enrollee.c:1046:			wps_fail_event(wps->wps, WPS_M6);
+./wps/wps_enrollee.c:1049:		ret = wps_process_m8(wps, msg, &attr);
+./wps/wps_enrollee.c:1050:		if (ret == WPS_FAILURE || wps->state == SEND_WSC_NACK)
+./wps/wps_enrollee.c:1051:			wps_fail_event(wps->wps, WPS_M8);
+./wps/wps_enrollee.c:1069:		wpabuf_free(wps->last_msg);
+./wps/wps_enrollee.c:1070:		wps->last_msg = wpabuf_dup(msg);
+./wps/wps_enrollee.c:1077:static enum wps_process_res wps_process_wsc_ack(struct wps_data *wps,
+./wps/wps_enrollee.c:1105:	    os_memcmp(wps->nonce_r, attr.registrar_nonce, WPS_NONCE_LEN) != 0)
+./wps/wps_enrollee.c:1112:	    os_memcmp(wps->nonce_e, attr.enrollee_nonce, WPS_NONCE_LEN) != 0) {
+./wps/wps_enrollee.c:1117:	if (wps->state == RECV_ACK && wps->wps->ap) {
+./wps/wps_enrollee.c:1120:		wps_success_event(wps->wps);
+./wps/wps_enrollee.c:1121:		wps->state = WPS_FINISHED;
+./wps/wps_enrollee.c:1129:static enum wps_process_res wps_process_wsc_nack(struct wps_data *wps,
+./wps/wps_enrollee.c:1157:	    os_memcmp(wps->nonce_r, attr.registrar_nonce, WPS_NONCE_LEN) != 0)
+./wps/wps_enrollee.c:1163:			    wps->nonce_r, WPS_NONCE_LEN);
+./wps/wps_enrollee.c:1168:	    os_memcmp(wps->nonce_e, attr.enrollee_nonce, WPS_NONCE_LEN) != 0) {
+./wps/wps_enrollee.c:1173:			    wps->nonce_e, WPS_NONCE_LEN);
+./wps/wps_enrollee.c:1186:	switch (wps->state) {
+./wps/wps_enrollee.c:1188:		wps_fail_event(wps->wps, WPS_M3);
+./wps/wps_enrollee.c:1191:		wps_fail_event(wps->wps, WPS_M5);
+./wps/wps_enrollee.c:1194:		wps_fail_event(wps->wps, WPS_M7);
+./wps/wps_enrollee.c:1202:	wps->state = SEND_WSC_NACK;
+./wps/wps_enrollee.c:1208:enum wps_process_res wps_enrollee_process_msg(struct wps_data *wps,
+./wps/wps_enrollee.c:1231:		return wps_process_wsc_msg(wps, msg);
+./wps/wps_enrollee.c:1233:		return wps_process_wsc_ack(wps, msg);
+./wps/wps_enrollee.c:1235:		return wps_process_wsc_nack(wps, msg);
+./wps/wps.h:107:	 * wps - Pointer to long term WPS context
+./wps/wps.h:109:	struct wps_context *wps;
+./wps/wps.h:190:enum wps_process_res wps_process_msg(struct wps_data *wps,
+./wps/wps.h:194:struct wpabuf * wps_get_msg(struct wps_data *wps, enum wsc_op_code *op_code);
+./wps/wps.h:695:wps_registrar_init(struct wps_context *wps,
+./wps/wps.h:717:int wps_process_oob(struct wps_context *wps, struct oob_device_data *oob_dev,
+./wps/wps.h:721:struct wps_er * wps_er_init(struct wps_context *wps, const char *ifname);
+Binary file ./wps/wps.o matches
+./wps/wps.c:39:	data->wps = cfg->wps;
+./wps/wps.c:42:		os_memcpy(data->uuid_r, cfg->wps->uuid, WPS_UUID_LEN);
+./wps/wps.c:44:		os_memcpy(data->mac_addr_e, cfg->wps->dev.mac_addr, ETH_ALEN);
+./wps/wps.c:45:		os_memcpy(data->uuid_e, cfg->wps->uuid, WPS_UUID_LEN);
+./wps/wps.c:48:		data->dev_pw_id = data->wps->oob_dev_pw_id == 0 ?
+./wps/wps.c:49:			DEV_PW_DEFAULT : data->wps->oob_dev_pw_id;
+./wps/wps.c:123:			wps_registrar_invalidate_pin(data->wps->registrar,
+./wps/wps.c:126:		wps_registrar_unlock_pin(data->wps->registrar, data->uuid_e);
+./wps/wps.c:147: * @wps: WPS Registration protocol data from wps_init()
+./wps/wps.c:157:enum wps_process_res wps_process_msg(struct wps_data *wps,
+./wps/wps.c:161:	if (wps->registrar)
+./wps/wps.c:162:		return wps_registrar_process_msg(wps, op_code, msg);
+./wps/wps.c:164:		return wps_enrollee_process_msg(wps, op_code, msg);
+./wps/wps.c:170: * @wps: WPS Registration protocol data from wps_init()
+./wps/wps.c:177:struct wpabuf * wps_get_msg(struct wps_data *wps, enum wsc_op_code *op_code)
+./wps/wps.c:179:	//if (wps->registrar)
+./wps/wps.c:180:	//	return wps_registrar_get_msg(wps, op_code);
+./wps/wps.c:182:		return wps_enrollee_get_msg(wps, op_code);
+./wps/wps_attr_process.c:22:int wps_process_authenticator(struct wps_data *wps, const u8 *authenticator,
+./wps/wps_attr_process.c:35:	if (wps->last_msg == NULL) {
+./wps/wps_attr_process.c:44:	addr[0] = wpabuf_head(wps->last_msg);
+./wps/wps_attr_process.c:45:	len[0] = wpabuf_len(wps->last_msg);
+./wps/wps_attr_process.c:48:	hmac_sha256_vector(wps->authkey, WPS_AUTHKEY_LEN, 2, addr, len, hash);
+./wps/wps_attr_process.c:59:int wps_process_key_wrap_auth(struct wps_data *wps, struct wpabuf *msg,
+./wps/wps_attr_process.c:79:	hmac_sha256(wps->authkey, WPS_AUTHKEY_LEN, head, len, hash);
+./wps/wps_i.h:18:#include "wps.h"
+./wps/wps_i.h:28:	 * wps - Pointer to long term WPS context
+./wps/wps_i.h:30:	struct wps_context *wps;
+./wps/wps_i.h:212:int wps_derive_keys(struct wps_data *wps);
+./wps/wps_i.h:213:void wps_derive_psk(struct wps_data *wps, const u8 *dev_passwd,
+./wps/wps_i.h:215:struct wpabuf * wps_decrypt_encr_settings(struct wps_data *wps, const u8 *encr,
+./wps/wps_i.h:217:void wps_fail_event(struct wps_context *wps, enum wps_msg_type msg);
+./wps/wps_i.h:218:void wps_success_event(struct wps_context *wps);
+./wps/wps_i.h:219:void wps_pwd_auth_fail_event(struct wps_context *wps, int enrollee, int part);
+./wps/wps_i.h:220:void wps_pbc_overlap_event(struct wps_context *wps);
+./wps/wps_i.h:221:void wps_pbc_timeout_event(struct wps_context *wps);
+./wps/wps_i.h:231:int wps_build_public_key(struct wps_data *wps, struct wpabuf *msg);
+./wps/wps_i.h:238:int wps_build_authenticator(struct wps_data *wps, struct wpabuf *msg);
+./wps/wps_i.h:239:int wps_build_key_wrap_auth(struct wps_data *wps, struct wpabuf *msg);
+./wps/wps_i.h:240:int wps_build_encr_settings(struct wps_data *wps, struct wpabuf *msg,
+./wps/wps_i.h:244:int wps_build_enrollee_nonce(struct wps_data *wps, struct wpabuf *msg);
+./wps/wps_i.h:245:int wps_build_registrar_nonce(struct wps_data *wps, struct wpabuf *msg);
+./wps/wps_i.h:246:int wps_build_auth_type_flags(struct wps_data *wps, struct wpabuf *msg);
+./wps/wps_i.h:247:int wps_build_encr_type_flags(struct wps_data *wps, struct wpabuf *msg);
+./wps/wps_i.h:248:int wps_build_conn_type_flags(struct wps_data *wps, struct wpabuf *msg);
+./wps/wps_i.h:249:int wps_build_assoc_state(struct wps_data *wps, struct wpabuf *msg);
+./wps/wps_i.h:250:int wps_build_oob_dev_password(struct wpabuf *msg, struct wps_context *wps);
+./wps/wps_i.h:253:int wps_process_authenticator(struct wps_data *wps, const u8 *authenticator,
+./wps/wps_i.h:255:int wps_process_key_wrap_auth(struct wps_data *wps, struct wpabuf *msg,
+./wps/wps_i.h:263:struct wpabuf * wps_enrollee_get_msg(struct wps_data *wps,
+./wps/wps_i.h:265:enum wps_process_res wps_enrollee_process_msg(struct wps_data *wps,
+./wps/wps_i.h:270:struct wpabuf * wps_registrar_get_msg(struct wps_data *wps,
+./wps/wps_i.h:273:enum wps_process_res wps_registrar_process_msg(struct wps_data *wps,
+./wps/wps_i.h:276:int wps_build_cred(struct wps_data *wps, struct wpabuf *msg);
+./wps/wps_attr_build.c:26:int wps_build_public_key(struct wps_data *wps, struct wpabuf *msg)
+./wps/wps_attr_build.c:31:	wpabuf_free(wps->dh_privkey);
+./wps/wps_attr_build.c:33:	//if (wps->dev_pw_id != DEV_PW_DEFAULT && wps->wps->dh_privkey) {
+./wps/wps_attr_build.c:34:	if (wps->wps->dh_privkey) {
+./wps/wps_attr_build.c:36:		wps->dh_privkey = wpabuf_dup(wps->wps->dh_privkey);
+./wps/wps_attr_build.c:37:		wps->dh_ctx = wps->wps->dh_ctx;
+./wps/wps_attr_build.c:38:		wps->wps->dh_ctx = NULL;
+./wps/wps_attr_build.c:39:		pubkey = wpabuf_dup(wps->wps->dh_pubkey);
+./wps/wps_attr_build.c:42:		wps->dh_privkey = NULL;
+./wps/wps_attr_build.c:43:		dh5_free(wps->dh_ctx);
+./wps/wps_attr_build.c:44:		wps->dh_ctx = dh5_init(&wps->dh_privkey, &pubkey);
+./wps/wps_attr_build.c:48:	if (wps->dh_ctx == NULL || wps->dh_privkey == NULL || pubkey == NULL) {
+./wps/wps_attr_build.c:55:	wpa_hexdump_buf_key(MSG_DEBUG, "WPS: DH Private Key", wps->dh_privkey); 
+./wps/wps_attr_build.c:62:	if (wps->registrar) {
+./wps/wps_attr_build.c:63:		wpabuf_free(wps->dh_pubkey_r);
+./wps/wps_attr_build.c:64:		wps->dh_pubkey_r = pubkey;
+./wps/wps_attr_build.c:71:		wpabuf_free(wps->dh_pubkey_e);
+./wps/wps_attr_build.c:72:		wps->dh_pubkey_e = pubkey;
+./wps/wps_attr_build.c:139:int wps_build_authenticator(struct wps_data *wps, struct wpabuf *msg)
+./wps/wps_attr_build.c:145:	if (wps->last_msg == NULL) {
+./wps/wps_attr_build.c:154:	addr[0] = wpabuf_head(wps->last_msg);
+./wps/wps_attr_build.c:155:	len[0] = wpabuf_len(wps->last_msg);
+./wps/wps_attr_build.c:158:	hmac_sha256_vector(wps->authkey, WPS_AUTHKEY_LEN, 2, addr, len, hash);
+./wps/wps_attr_build.c:189:int wps_build_enrollee_nonce(struct wps_data *wps, struct wpabuf *msg)
+./wps/wps_attr_build.c:194:	wpabuf_put_data(msg, wps->nonce_e, WPS_NONCE_LEN);
+./wps/wps_attr_build.c:199:int wps_build_registrar_nonce(struct wps_data *wps, struct wpabuf *msg)
+./wps/wps_attr_build.c:204:	wpabuf_put_data(msg, wps->nonce_r, WPS_NONCE_LEN);
+./wps/wps_attr_build.c:209:int wps_build_auth_type_flags(struct wps_data *wps, struct wpabuf *msg)
+./wps/wps_attr_build.c:219:int wps_build_encr_type_flags(struct wps_data *wps, struct wpabuf *msg)
+./wps/wps_attr_build.c:229:int wps_build_conn_type_flags(struct wps_data *wps, struct wpabuf *msg)
+./wps/wps_attr_build.c:240:int wps_build_assoc_state(struct wps_data *wps, struct wpabuf *msg)
+./wps/wps_attr_build.c:251:int wps_build_key_wrap_auth(struct wps_data *wps, struct wpabuf *msg)
+./wps/wps_attr_build.c:256:	hmac_sha256(wps->authkey, WPS_AUTHKEY_LEN, wpabuf_head(msg),
+./wps/wps_attr_build.c:266:int wps_build_encr_settings(struct wps_data *wps, struct wpabuf *msg,
+./wps/wps_attr_build.c:288:	if (aes_128_cbc_encrypt(wps->keywrapkey, iv, data, wpabuf_len(plain)))
+./wps/wps_attr_build.c:296:int wps_build_oob_dev_password(struct wpabuf *msg, struct wps_context *wps)
+./wps/wps_attr_build.c:305:	addr[0] = wpabuf_head(wps->dh_pubkey);
+./wps/wps_attr_build.c:306:	hash_len = wpabuf_len(wps->dh_pubkey);
+./wps/wps_attr_build.c:309:	if (os_get_random((u8 *) &wps->oob_dev_pw_id, sizeof(u16)) < 0) {
+./wps/wps_attr_build.c:314:	wps->oob_dev_pw_id |= 0x0010;
+./wps/wps_attr_build.c:325:	wpabuf_put_be16(msg, wps->oob_dev_pw_id);
+./wps/wps_attr_build.c:329:		wpabuf_put(wps->oob_conf.dev_password,
+./wps/wps_attr_build.c:330:			   wpabuf_size(wps->oob_conf.dev_password)),
+./wps/wps_attr_build.c:331:		wpabuf_size(wps->oob_conf.dev_password),
+./wps/wps_common.c:67:int wps_derive_keys(struct wps_data *wps)
+./wps/wps_common.c:75:	if (wps->dh_privkey == NULL) {
+./wps/wps_common.c:80:	pubkey = wps->registrar ? wps->dh_pubkey_e : wps->dh_pubkey_r;
+./wps/wps_common.c:86:	wpa_hexdump_buf_key(MSG_DEBUG, "WPS: DH Private Key", wps->dh_privkey); 
+./wps/wps_common.c:88:	dh_shared = dh5_derive_shared(wps->dh_ctx, pubkey, wps->dh_privkey);
+./wps/wps_common.c:89:	dh5_free(wps->dh_ctx);
+./wps/wps_common.c:90:	wps->dh_ctx = NULL;
+./wps/wps_common.c:98:	wpabuf_free(wps->dh_privkey);
+./wps/wps_common.c:99:	wps->dh_privkey = NULL;
+./wps/wps_common.c:111:	addr[0] = wps->nonce_e;
+./wps/wps_common.c:113:	addr[1] = wps->mac_addr_e;
+./wps/wps_common.c:115:	addr[2] = wps->nonce_r;
+./wps/wps_common.c:122:	os_memcpy(wps->authkey, keys, WPS_AUTHKEY_LEN);
+./wps/wps_common.c:123:	os_memcpy(wps->keywrapkey, keys + WPS_AUTHKEY_LEN, WPS_KEYWRAPKEY_LEN);
+./wps/wps_common.c:124:	os_memcpy(wps->emsk, keys + WPS_AUTHKEY_LEN + WPS_KEYWRAPKEY_LEN,
+./wps/wps_common.c:128:			wps->authkey, WPS_AUTHKEY_LEN);
+./wps/wps_common.c:130:			wps->keywrapkey, WPS_KEYWRAPKEY_LEN);
+./wps/wps_common.c:131:	wpa_hexdump_key(MSG_DEBUG, "WPS: EMSK", wps->emsk, WPS_EMSK_LEN);
+./wps/wps_common.c:135:		pixie_format(wps->authkey, WPS_AUTHKEY_LEN, buf);
+./wps/wps_common.c:143:void wps_derive_psk(struct wps_data *wps, const u8 *dev_passwd,
+./wps/wps_common.c:148:	hmac_sha256(wps->authkey, WPS_AUTHKEY_LEN, dev_passwd,
+./wps/wps_common.c:150:	os_memcpy(wps->psk1, hash, WPS_PSK_LEN);
+./wps/wps_common.c:151:	hmac_sha256(wps->authkey, WPS_AUTHKEY_LEN,
+./wps/wps_common.c:154:	os_memcpy(wps->psk2, hash, WPS_PSK_LEN);
+./wps/wps_common.c:158:	wpa_hexdump_key(MSG_DEBUG, "WPS: PSK1", wps->psk1, WPS_PSK_LEN);
+./wps/wps_common.c:159:	wpa_hexdump_key(MSG_DEBUG, "WPS: PSK2", wps->psk2, WPS_PSK_LEN);
+./wps/wps_common.c:163:struct wpabuf * wps_decrypt_encr_settings(struct wps_data *wps, const u8 *encr,
+./wps/wps_common.c:185:	if (aes_128_cbc_decrypt(wps->keywrapkey, encr, wpabuf_mhead(decrypted),
+./wps/wps_common.c:266:void wps_fail_event(struct wps_context *wps, enum wps_msg_type msg)
+./wps/wps_common.c:270:	if (wps->event_cb == NULL)
+./wps/wps_common.c:275:	wps->event_cb(wps->cb_ctx, WPS_EV_FAIL, &data);
+./wps/wps_common.c:279:void wps_success_event(struct wps_context *wps)
+./wps/wps_common.c:281:	if (wps->event_cb == NULL)
+./wps/wps_common.c:284:	wps->event_cb(wps->cb_ctx, WPS_EV_SUCCESS, NULL);
+./wps/wps_common.c:288:void wps_pwd_auth_fail_event(struct wps_context *wps, int enrollee, int part)
+./wps/wps_common.c:292:	if (wps->event_cb == NULL)
+./wps/wps_common.c:298:	wps->event_cb(wps->cb_ctx, WPS_EV_PWD_AUTH_FAIL, &data);
+./wps/wps_common.c:302:void wps_pbc_overlap_event(struct wps_context *wps)
+./wps/wps_common.c:304:	if (wps->event_cb == NULL)
+./wps/wps_common.c:307:	wps->event_cb(wps->cb_ctx, WPS_EV_PBC_OVERLAP, NULL);
+./wps/wps_common.c:311:void wps_pbc_timeout_event(struct wps_context *wps)
+./wps/wps_common.c:313:	if (wps->event_cb == NULL)
+./wps/wps_common.c:316:	wps->event_cb(wps->cb_ctx, WPS_EV_PBC_TIMEOUT, NULL);
+./wps/wps_common.c:322:static struct wpabuf * wps_get_oob_cred(struct wps_context *wps)
+./wps/wps_common.c:335:	data.wps = wps;
+./wps/wps_common.c:336:	data.auth_type = wps->auth_types;
+./wps/wps_common.c:337:	data.encr_type = wps->encr_types;
+./wps/wps_common.c:347:static struct wpabuf * wps_get_oob_dev_pwd(struct wps_context *wps)
+./wps/wps_common.c:358:	wpabuf_free(wps->oob_conf.dev_password);
+./wps/wps_common.c:359:	wps->oob_conf.dev_password =
+./wps/wps_common.c:361:	if (wps->oob_conf.dev_password == NULL) {
+./wps/wps_common.c:369:	    wps_build_oob_dev_password(data, wps)) {
+./wps/wps_common.c:380:static int wps_parse_oob_dev_pwd(struct wps_context *wps,
+./wps/wps_common.c:383:	struct oob_conf_data *oob_conf = &wps->oob_conf;
+./wps/wps_common.c:404:	wps->oob_dev_pw_id = WPA_GET_BE16(pos);
+./wps/wps_common.c:405:	pos += sizeof(wps->oob_dev_pw_id);
+./wps/wps_common.c:423:static int wps_parse_oob_cred(struct wps_context *wps, struct wpabuf *data)
+./wps/wps_common.c:446:		wps->cred_cb(wps->cb_ctx, &local_cred);
+./wps/wps_common.c:453:int wps_process_oob(struct wps_context *wps, struct oob_device_data *oob_dev,
+./wps/wps_common.c:457:	int ret, write_f, oob_method = wps->oob_conf.oob_method;
+./wps/wps_common.c:462:	oob_priv = oob_dev->init_func(wps, oob_dev, registrar);
+./wps/wps_common.c:470:			data = wps_get_oob_cred(wps);
+./wps/wps_common.c:472:			data = wps_get_oob_dev_pwd(wps);
+./wps/wps_common.c:483:				ret = wps_parse_oob_cred(wps, data);
+./wps/wps_common.c:485:				ret = wps_parse_oob_dev_pwd(wps, data);
+Binary file ./wpscrack.o matches
+./wpsmon.c:381:	struct libwps_data *wps = NULL;
+./wpsmon.c:388:	wps = malloc(sizeof(struct libwps_data));
+./wpsmon.c:389:	memset(wps, 0, sizeof(struct libwps_data));
+./wpsmon.c:437:				wps_parsed = parse_wps_parameters(packet, header->len, wps);
+./wpsmon.c:451:				if(!json_mode && (!was_printed(bssid) && (wps_active(wps) || show_all_aps == 1)))
+./wpsmon.c:453:					if(wps_active(wps)) switch(wps->locked)
+./wpsmon.c:474:					if(wps_active(wps))
+./wpsmon.c:477:							fprintf(stdout, "%17s  %3d  %.2d  %d.%d  %3s  %8s  %5s  %s\n", bssid, channel, rssi, (wps->version >> 4), (wps->version & 0x0F), lock_display, vendor ? vendor : "        ", crack_progress ? crack_progress : "-", sane_ssid);
+./wpsmon.c:479:							fprintf(stdout, "%17s  %3d  %.2d  %d.%d  %3s  %8s  %s\n", bssid, channel, rssi, (wps->version >> 4), (wps->version & 0x0F), lock_display, vendor ? vendor : "        ", sane_ssid);
+./wpsmon.c:505:					if(json_mode && (show_all_aps || wps_active(wps))) {
+./wpsmon.c:509:						char *json_string = wps_data_to_json(bssid, ssid, channel, rssi, get_ap_vendor(bssid), wps, crack_progress);
+./wpsmon.c:526:	if(wps) free(wps);
+./globule.h:43:        int last_wps_state;             /* Holds the previous WPS state as stored in wps->state */
+./globule.h:155:        struct wps_data *wps;           /* 
+./init.c:43:	struct wps_data *wps = NULL;
+./init.c:69:	wpsconf->wps = malloc(sizeof(struct wps_context));
+./init.c:70:	if(!wpsconf->wps)
+./init.c:75:	memset(wpsconf->wps, 0, sizeof(struct wps_context));
+./init.c:81:	wpsconf->wps->registrar = wps_registrar_init(wpsconf->wps, (const struct wps_registrar_config *) reg_conf);
+./init.c:82:	if(wpsconf->wps->registrar == NULL)
+./init.c:92:	if(os_get_random(wpsconf->wps->uuid, UUID_LEN) == -1)
+./init.c:94:		memcpy(wpsconf->wps->uuid, DEFAULT_UUID, UUID_LEN);
+./init.c:97:	wps = wps_init(wpsconf);
+./init.c:98:	if(wps)
+./init.c:101:		if(wps->wps && get_win7_compat())
+./init.c:103:			wps->wps->dev.device_name = WPS_DEVICE_NAME;
+./init.c:104:			wps->wps->dev.manufacturer = WPS_MANUFACTURER;
+./init.c:105:			wps->wps->dev.model_name = WPS_MODEL_NAME;
+./init.c:106:			wps->wps->dev.model_number = WPS_MODEL_NUMBER;
+./init.c:107:			memcpy(wps->wps->dev.pri_dev_type, WPS_DEVICE_TYPE, WPS_DEV_TYPE_LEN);
+./init.c:108:			memcpy((void *) &wps->wps->dev.os_version, WPS_OS_VERSION, 4);
+./init.c:109:			wps->wps->dev.rf_bands = WPS_RF_BANDS;
+./init.c:115:	return wps;
+./builder.c:299:	struct wps_data *wps = get_wps();
+./builder.c:302:	switch(wps->state)
+./wps.h:41:#include "wps/wps.h"
+./wps.h:42:#include "wps/wps_i.h"
+./exchange.c:223:		 * If a NACK message was received, then the current wps->state value will be
+./exchange.c:328:	struct wps_data *wps = NULL;
+./exchange.c:427:	wps = get_wps();
+./exchange.c:428:	set_last_wps_state(wps->state);
+./exchange.c:440:	struct wps_data *wps = get_wps();
+./exchange.c:450:		wps_registrar_process_msg(wps, get_opcode(), msg);
+./send.c:88:/* Send the appropriate WPS message based on the current WPS state (globule->wps->state) */
+./send.c:98:	struct wps_data *wps = get_wps();
+./send.c:104:        msg = wps_registrar_get_msg(wps, &opcode, type);
+./send.c:150:	struct wps_data *wps = get_wps();
+./send.c:152:	wps->state = SEND_WSC_NACK;
+./libwps/libwps.c:40:char *wps_data_to_json(const char*bssid, const char *ssid, int channel, int rssi, const unsigned char* vendor, struct libwps_data *wps, const char *progress) {
+./libwps/libwps.c:69:	if(wps->version) {
+./libwps/libwps.c:70:		nl = snprintf(buf, sizeof buf, "\"wps_version\" : %d, ", wps->version);
+./libwps/libwps.c:74:	if(wps->state) {
+./libwps/libwps.c:75:		nl = snprintf(buf, sizeof buf, "\"wps_state\" : %d, ", wps->state);
+./libwps/libwps.c:79:	if(wps->locked) {
+./libwps/libwps.c:80:		nl = snprintf(buf, sizeof buf, "\"wps_locked\" : %d, ", wps->locked);
+./libwps/libwps.c:84:	if(*wps->manufacturer) {
+./libwps/libwps.c:85:		tmp = sanitize_string(wps->manufacturer);
+./libwps/libwps.c:91:	if(*wps->model_name) {
+./libwps/libwps.c:92:		tmp = sanitize_string(wps->model_name);
+./libwps/libwps.c:98:	if(*wps->model_number) {
+./libwps/libwps.c:99:		tmp = sanitize_string(wps->model_number);
+./libwps/libwps.c:105:	if(*wps->device_name) {
+./libwps/libwps.c:106:		tmp = sanitize_string(wps->device_name);
+./libwps/libwps.c:112:	if(*wps->ssid) {
+./libwps/libwps.c:113:		tmp = sanitize_string(wps->ssid);
+./libwps/libwps.c:119:	if(*wps->serial) {
+./libwps/libwps.c:120:		tmp = sanitize_string(wps->serial);
+./libwps/libwps.c:126:	if(*wps->os_version) {
+./libwps/libwps.c:127:		tmp = sanitize_string(wps->os_version);
+./libwps/libwps.c:133:	if(*wps->uuid) {
+./libwps/libwps.c:134:		tmp = sanitize_string(wps->uuid);
+./libwps/libwps.c:140:	if(*wps->selected_registrar) {
+./libwps/libwps.c:141:		tmp = sanitize_string(wps->selected_registrar);
+./libwps/libwps.c:147:	if(*wps->response_type) {
+./libwps/libwps.c:148:		tmp = sanitize_string(wps->response_type);
+./libwps/libwps.c:154:	if(*wps->primary_device_type) {
+./libwps/libwps.c:155:		tmp = sanitize_string(wps->primary_device_type);
+./libwps/libwps.c:161:	if(*wps->config_methods) {
+./libwps/libwps.c:162:		tmp = sanitize_string(wps->config_methods);
+./libwps/libwps.c:168:	if(*wps->rf_bands) {
+./libwps/libwps.c:169:		tmp = sanitize_string(wps->rf_bands);
+./libwps/libwps.c:192: * struct libwps_data *wps	Pointer to an allocated libwps_data structure
+./libwps/libwps.c:197:int parse_wps_parameters(const u_char *packet, size_t len, struct libwps_data *wps)
+./libwps/libwps.c:204:	if(wps)
+./libwps/libwps.c:206:		memset(wps, 0, sizeof(struct libwps_data));
+./libwps/libwps.c:222:			ret_val = parse_wps_tag(data, data_len, wps);
+./libwps/libwps.c:230:int parse_wps_tag(const u_char *tags, size_t len, struct libwps_data *wps)
+./libwps/libwps.c:258:	wps->locked = UNSPECIFIED;
+./libwps/libwps.c:276:						wps->version = (uint8_t) el[0];
+./libwps/libwps.c:279:						wps->state = (uint8_t) el[0];
+./libwps/libwps.c:282:						wps->locked = (uint8_t) el[0];
+./libwps/libwps.c:285:						ptr = wps->manufacturer;
+./libwps/libwps.c:288:						ptr = wps->model_name;
+./libwps/libwps.c:291:						ptr = wps->model_number;
+./libwps/libwps.c:294:						ptr = wps->device_name;
+./libwps/libwps.c:297:						ptr = wps->ssid;
+./libwps/libwps.c:301:						ptr = wps->uuid;
+./libwps/libwps.c:304:						ptr = wps->serial;
+./libwps/libwps.c:308:						ptr = wps->selected_registrar;
+./libwps/libwps.c:312:						ptr = wps->response_type;
+./libwps/libwps.c:316:						ptr = wps->primary_device_type;
+./libwps/libwps.c:320:						ptr = wps->config_methods;
+./libwps/libwps.c:324:						ptr = wps->rf_bands;
+./libwps/libwps.c:327:						ptr = wps->os_version;
+./libwps/libwps.c:337:									wps->version = (uint8_t) pwfa[2];
+./libwps/libwps.h:53:int parse_wps_parameters(const u_char *packet, size_t len, struct libwps_data *wps);
+./libwps/libwps.h:54:char *wps_data_to_json(const char*bssid, const char *ssid, int channel, int rssi, const unsigned char* vendor, struct libwps_data *wps, const char *progress);
+./libwps/libwps.h:136:int parse_wps_tag(const u_char *tags, size_t len, struct libwps_data *wps);
+./wpscrack.c:45:	struct wps_data *wps = NULL;
+./wpscrack.c:120:		wps = get_wps();
+./wpscrack.c:124:		if(wps->key)      cprintf(CRITICAL, "[+] WPA PSK: '%s'\n", wps->key);
+./wpscrack.c:125:		if(wps->essid)    cprintf(CRITICAL, "[+] AP SSID: '%s'\n", wps->essid);
+./wpscrack.c:171:	fprintf(stderr, "\t-p, --pin=<wps pin>             Use the specified pin (may be arbitrary string or 4/8 digit WPS pin)\n");
+./80211.c:221:	struct libwps_data wps = { 0 };
+./80211.c:250:					if(parse_wps_parameters(packet, header.len, &wps))
+./80211.c:252:						if(wps.locked == WPSLOCKED)
+./Makefile:34:WPS_OBJS=wps/wps_attr_build.o wps/wps_attr_parse.o wps/wps_attr_process.o \
+./Makefile:35:wps/wps.o wps/wps_common.o wps/wps_dev_attr.o wps/wps_enrollee.o \
+./Makefile:36:wps/wps_registrar.o wps/wps_ufd.o
+./session.c:290:	struct wps_data *wps = NULL;
+./session.c:293:	wps = get_wps();
+./session.c:298:	if(wps)
+./session.c:300:		wpa_key = wps->key;
+./session.c:301:		essid = wps->essid;
+Binary file ./.wpscrack.c.swp matches
+./config.status:430:ac_pwd='/home/thekingh/final_projects/mp/reaver-wps-fork-t6x/src'
+./pins.c:63: * and populate the wps structure with the new pin.
+./pins.c:68:        struct wps_data *wps = get_wps();
+./pins.c:71:        wps_registrar_invalidate_pin(wps->wps->registrar, wps->uuid_e);
+./pins.c:79:                add_result = wps_registrar_add_pin(wps->wps->registrar, NULL, (const u8 *) pin, strlen(pin), 0);
+./pins.c:88:                        add_result = wps_registrar_add_pin(wps->wps->registrar, NULL, (const u8 *) pin, PIN_SIZE, 0);
+./defs.h:46:#include "wps.h"
+./globule.c:81:            if(globules[t_id]->wps) wps_deinit(globules[t_id]->wps);
+./globule.c:668:	globules[t_id]->wps = value;
+./globule.c:673:	return globules[t_id]->wps;
+Binary file ./reaver matches
+./cracker.c:181:			/* Initialize wps structure */
+./cracker.c:269:			 * The WPA key and other settings are stored in the globule->wps structure. If we've 

